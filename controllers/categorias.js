@@ -9,9 +9,9 @@ class CategoriasController {
         /* editar categoria */
     }
 
-    eliminar(categoria) {
+    eliminar(idCategoria) {
         categorias.find((categoria, i) => {
-            if (categoria.id === categoria) {
+            if (categoria.id === idCategoria) {
                 categorias.splice(i, 1);
             }
         })
