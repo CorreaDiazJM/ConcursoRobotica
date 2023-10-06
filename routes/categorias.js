@@ -12,7 +12,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // Importar el controlador de categorías
-const categoriasController = require('../controllers/categoriasController');
+const categoriasController = require('../controllers/categorias.js');
 
 // Ruta para editar una categoría específica
 router.put('/categorias/:id', categoriasController.editarCategoria);
