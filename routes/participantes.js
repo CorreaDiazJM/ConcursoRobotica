@@ -20,5 +20,10 @@ router.delete('/:id', (req, res) => {
 router.delete('/:idEquipo/categoria/:idCategoria', (req, res) => {
     res.send('Eliminar incripcion ' + req.params.idCategoria + ' del equipo ' + req.params.idEquipo);
 })
+// Importar el controlador de participantes
+const participantesController = require('../controllers/participantesController');
+
+// Ruta para editar un participante específico
+router.put('/participantes/:id', participantesController.editarParticipante);
 
 module.exports = router;
