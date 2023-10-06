@@ -1,5 +1,13 @@
 let express = require('express');
 let router = express.Router();
+var ModalidadesController = require("../controllers/modalidad");
+var CategoriasController = require("../controllers/categorias");
+
+//ingresar categorias y ver
+router.post('/', function(req, res, next) {
+  CategoriasController.insertar(req.body);
+  res.send(ModalidadesController.mostrar());
+})
 
 /* GET equipos inscritos en una categoria */
 router.get('/:idCategoria/participantes', (req, res) => {
