@@ -1,5 +1,17 @@
 let express = require('express');
 let router = express.Router();
+var ParticipantesController = require("../controllers/participantes");
+
+//Agregar participantes
+router.post('/', (req, res, next) => {
+    ParticipantesController.insertar(req.body);
+    res.send(ParticipantesController.mostrarEquipos());
+
+})
+
+router.get('/', (req, res, next) => {
+    res.send(ParticipantesController.mostrarEquipos());
+})
 
 /* GET equipos */
 router.get('/', (req, res) => {
