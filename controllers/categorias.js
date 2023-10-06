@@ -60,3 +60,4 @@ module.exports = { editarCategoria };
         })
     }
 }
+module.exports = new CategoriasController();
