@@ -1,8 +1,9 @@
+var ModalidadesController = require("../controllers/modalidad");
 let categorias = [];
 
 class CategoriasController {
-    insertar(categoria, idModalidad) {
-        /* insertar categoria */
+    insertar(categoria) {
+        ModalidadesController.categoria(categoria)
     }
 
     editar(categoria, params) {
