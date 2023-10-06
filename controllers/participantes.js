@@ -1,6 +1,39 @@
-const CategoriasController = require('./categorias');
+//Ricardo empieza aqui
+const { v4: uuidv4 } = require('uuid');
 
-let participantes = [];
+let participantes=[
+    {
+        id:"1",
+        nombreEquipo:"VI"
+    },      
+    {
+        idEquipo: "1",
+        cedula: "28445397",
+        nombre: "ricardo"
+    },
+    {
+        idEquipo: "1",
+        cedula: "30987267",
+        nombre: "jesus"
+    },
+    {
+        idEquipo: "1",
+        cedula: "31275689",
+        nombre: "manuel"
+    }
+]
+
+
+class ParticipantesController {
+    insertar(equipo) {       
+        participantes.push(equipo)
+    }
+    mostrarEquipos() {
+        return participantes
+        
+    }
+}
+//Ricardo hasta aqui
 
 // Método para editar un participante
 function editarParticipante(req, res) {
