@@ -1,20 +1,24 @@
-let express = require('express');
-let router = express.Router();
-var PatrocinantesController = require("../controllers/patrocinantes")
+const PatrocinantesController = require("../controllers/patrocinantes")
+const express = require('express');
 
-/* GET users listing. */
+let router = express.Router();
+
+
 router.get('/', (req, res) => {
-    res.send('Mostrar todos los patrocinantes');
+    res.send(PatrocinantesController.mostrar());
 });
 
-//insertar y mostrar lista actualizada
-router.post('/', function(req, res, next) {
-  PatrocinantesController.insertar(req.body)
-  res.send(PatrocinantesController.mostrar());
-})
+router.post('/', (req, res) => {
+    if (req.body.patrocinante && req.body.participante) {
+        const { patrocinante, participante } = req.body;
+        PatrocinantesController.insertar(patrocinante, participante);
+        res.send(PatrocinantesController.mostrar());
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
+        });
+    }
+});
 
-router.get('/:id', (req, res) => {
-    res.send('Mostrar patrociante ' + req.params.id);
-})
 
 module.exports = router;

@@ -1,41 +1,70 @@
-let express = require('express');
+const express = require('express');
+const ParticipantesController = require("../controllers/participantes");
+
 let router = express.Router();
-var ParticipantesController = require("../controllers/participantes");
 
-//Agregar participantes
-router.post('/', (req, res, next) => {
-    ParticipantesController.insertar(req.body);
-    res.send(ParticipantesController.mostrarEquipos());
 
-})
+router.post('/', (req, res) => {
+    if (req.body.integrantes && req.body.categorias) {
+        const { integrantes, categorias } = req.body;
+        ParticipantesController.insertar(integrantes, categorias);
+        res.send(ParticipantesController.mostrar());
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
+        });
+    }
+});
 
-router.get('/', (req, res, next) => {
-    res.send(ParticipantesController.mostrarEquipos());
-})
+router.put('/:idParticipante', (req, res) => {
+    if (req.body.integrantes && req.body.categorias) {
+        const { integrantes, categorias } = req.body;
+        ParticipantesController.editar(req.params.idParticipante, integrantes, categorias);
+        res.send(ParticipantesController.mostrar());
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
+        });
+    }
+});
 
-/* GET equipos */
+router.delete('/:idParticipante', (req, res) => {
+    if (ParticipantesController.existeParticipante(req.params.idParticipante)) {
+        ParticipantesController.eliminar(req.params.idParticipante);
+        res.send(ParticipantesController.mostrar());
+    } else {
+        res.status(404).json({
+            message: 'No existe el equipo participante ' + req.params.idParticipante
+        });
+    }
+});
+
 router.get('/', (req, res) => {
-    res.send('Mostrar todos los equipos');
+    res.send(ParticipantesController.mostrar());
 });
 
-/* GET un equipo */
-router.get('/:id', (req, res) => {
-    res.send('Mostrar equipo ' + req.params.id);
+router.get('/:idCategoria', (req, res) => {
+    const inscritos = ParticipantesController.mostrarEquiposPorInscripcion(req.params.idCategoria);
+
+    if (inscritos && inscritos.length) {
+        res.send(inscritos);
+    } else {
+        res.json({
+            message: 'No se encuentran equipos inscritos'
+        });
+    }
 });
 
-/* DELETE equipo por id */
-router.delete('/:id', (req, res) => {
-    res.send('Eliminar equipo ' + req.params.id);
+router.delete('/:idParticipante/:idCategoria', (req, res) => {
+    if (ParticipantesController.existeParticipante(req.params.idParticipante)) {
+        ParticipantesController.eliminarInscripcion(req.params.idParticipante, req.params.idCategoria);
+        res.send(ParticipantesController.mostrar());
+    } else {
+        res.status(404).json({
+            message: 'No existe el equipo participante ' + req.params.idParticipante
+        });
+    }
 });
 
-/* DELETE eliminar inscripcion a categoria */
-router.delete('/:idEquipo/categoria/:idCategoria', (req, res) => {
-    res.send('Eliminar incripcion ' + req.params.idCategoria + ' del equipo ' + req.params.idEquipo);
-})
-// Importar el controlador de participantes
-const participantesController = require('../controllers/participantesController');
-
-// Ruta para editar un participante específico
-router.put('/participantes/:id', participantesController.editarParticipante);
 
 module.exports = router;

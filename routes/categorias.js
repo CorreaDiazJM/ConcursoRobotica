@@ -1,28 +1,46 @@
-let express = require('express');
+const express = require('express');
+const CategoriasController = require('../controllers/categorias');
+
 let router = express.Router();
-var ModalidadesController = require("../controllers/modalidad");
-var CategoriasController = require("../controllers/categorias");
 
-//ingresar categorias y ver
-router.post('/', function(req, res, next) {
-  CategoriasController.insertar(req.body);
-  res.send(ModalidadesController.mostrar());
+
+router.post('/', (req, res) => {
+    if (req.body.categoria && req.body.modalidad) {
+        const { categoria, modalidad } = req.body;
+        CategoriasController.insertar(categoria, modalidad);
+        res.send(CategoriasController.mostrar());
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
+        });
+    }
+});
+
+router.put('/:idCategoria', (req, res) => {
+    if (req.body.categoria && req.body.modalidad) {
+        const { categoria, modalidad } = req.body;
+        CategoriasController.editar(req.params.idCategoria, categoria, modalidad);
+        res.send(CategoriasController.mostrar());
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
+        });
+    }
+});
+
+router.get('/', (req, res) => {
+    res.send(CategoriasController.mostrar());
+});
+
+router.delete('/:idCategoria', (req, res) => {
+    if (CategoriasController.existeCategoria(req.params.idCategoria)) {
+        CategoriasController.eliminar(req.params.idCategoria);
+        res.send(CategoriasController.mostrar());
+    } else {
+        res.status(404).json({
+            message: 'No existe esa categoria'
+        });
+    }
 })
-
-/* GET equipos inscritos en una categoria */
-router.get('/:idCategoria/participantes', (req, res) => {
-    res.send('Mostrar equipos en la categoria ' + req.params.idCategoria);
-});
-
-/* DELETE categoria */
-router.delete('/:id', (req, res) => {
-    res.send('Eliminar categoria ' + req.params.id);
-});
-
-// Importar el controlador de categorías
-const categoriasController = require('../controllers/categorias.js');
-
-// Ruta para editar una categoría específica
-router.put('/categorias/:id', categoriasController.editarCategoria);
 
 module.exports = router;

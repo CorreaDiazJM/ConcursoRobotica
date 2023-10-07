@@ -1,63 +1,73 @@
-var ModalidadesController = require("../controllers/modalidad");
-let categorias = [];
+const ModalidadesController = require('./modalidades');
+const { v4: uuidv4 } = require('uuid');
+
+let categorias = [
+    {
+        "id": "85d3b5c4-0385-4551-8ad5-9864def765d8",
+        "categoria": "Zumo",
+        "idModalidad": "33b87286-7292-4053-92ac-6ee3e81f0f41"
+    },
+    {
+        "id": "007244cb-9e85-484d-862d-606f43bfc26c",
+        "categoria": "Incapacidad",
+        "idModalidad": "33b87286-7292-4053-92ac-6ee3e81f0f41"
+    },
+    {
+        "id": "1086505e-72f1-4686-bf2f-d1a2d4a2555a",
+        "categoria": "Formula 1",
+        "idModalidad": "cdb5418c-f326-4802-b9d5-5b5631a671cd"
+    },
+    {
+        "id": "de6b0173-d57b-4853-bbd0-0351c7f2321a",
+        "categoria": "Lentos",
+        "idModalidad": "cdb5418c-f326-4802-b9d5-5b5631a671cd"
+    }
+];
 
 class CategoriasController {
-    insertar(categoria) {
-        ModalidadesController.categoria(categoria)
+    insertar(categoria, idModalidad) {
+        if (ModalidadesController.existeModalidad(idModalidad)) {
+            let id = uuidv4();
+            categorias.push({ id, categoria, idModalidad });
+        }
     }
 
-    editar(categoria, params) {
-        /* editar categoria */
+    existeCategoria(id) {
+        let existe = false;
+
+        for (const categoria of categorias) {
+            if (categoria.id === id) {
+                existe = true;
+            }
+        }
+
+        return existe;
     }
 
-// Método para editar una categoría
-function editarCategoria(req, res) {
-  const categoriaId = req.params.id;
-  const nuevaInformacion = req.body;
+    editar(idCategoria, categoria, idModalidad) {
+        if (ModalidadesController.existeModalidad(idModalidad)) {
+            for (const cat of categorias) {
+                if (cat.id === idCategoria) {
+                    cat.categoria = categoria;
+                    cat.idModalidad = idModalidad;
+                }
+            }
+        }
+    }
 
-  // Aquí deberías implementar la lógica para buscar la categoría en tu sistema según el ID recibido
-  // y actualizar sus propiedades con los nuevos valores proporcionados en nuevaInformacion.
-
-  // Ejemplo de implementación:
-  const categoria = obtenerCategoriaPorId(categoriaId);
-
-  if (categoria) {
-    // Actualizar las propiedades de la categoría con los nuevos valores
-    categoria.nombre = nuevaInformacion.nombre;
-    categoria.descripcion = nuevaInformacion.descripcion;
-
-    // Enviar respuesta con código de estado 200 y mensaje de éxito
-    return res.status(200).json({ mensaje: 'Categoría editada exitosamente' });
-  } else {
-    // Enviar respuesta con código de estado 404 y mensaje de error si la categoría no existe
-    return res.status(404).json({ mensaje: 'La categoría no existe' });
-  }
-}
-
-// Función auxiliar para obtener una categoría por su ID (ejemplo)
-function obtenerCategoriaPorId(id) {
-  // Aquí deberías implementar la lógica para buscar y retornar la categoría por su ID en tu sistema
-  // Puede ser mediante consultas a una base de datos, acceso a un arreglo de categorías, etc.
-  // Retorna la categoría encontrada o null si no se encuentra
-  // Ejemplo:
-  const categorias = [
-    { id: 1, nombre: 'Categoría 1', descripcion: 'Descripción de la categoría 1' },
-    { id: 2, nombre: 'Categoría 2', descripcion: 'Descripción de la categoría 2' },
-  ];
-
-  return categorias.find(categoria => categoria.id === id);
-}
-
-module.exports = {
-  editarCategoria
-};
-module.exports = { editarCategoria };
     eliminar(idCategoria) {
-        categorias.find((categoria, i) => {
+        for (let i = 0; i < categorias.length; i++) {
+            const categoria = categorias[i];
+            
             if (categoria.id === idCategoria) {
                 categorias.splice(i, 1);
             }
-        })
+        }
+    }
+
+    mostrar() {
+        return categorias;
     }
 }
+
 module.exports = new CategoriasController();

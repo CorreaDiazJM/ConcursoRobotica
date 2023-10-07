@@ -1,14 +1,15 @@
-var express = require('express');
-var router = express.Router();
-var ModalidadesController = require("../controllers/modalidad");
-const { route } = require('./users');
+const express = require('express');
+const ModalidadesController = require("../controllers/modalidades");
 
-router.post('/', function(req, res, next) {
-  ModalidadesController.insertar(req.body)
-  res.send(ModalidadesController.mostrar());
+let router = express.Router();
+
+
+router.post('/', (req, res) => {
+    ModalidadesController.insertar(req.body)
+    res.send(ModalidadesController.mostrar());
 })
 
-router.get('/', function (req, res, next) {
+router.get('/', (req, res) => {
     res.send(ModalidadesController.mostrar());
 })   
 
