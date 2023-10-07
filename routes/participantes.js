@@ -1,8 +1,18 @@
 const express = require('express');
 const ParticipantesController = require("../controllers/participantes");
+const PatrocinantesController = require('../controllers/patrocinantes');
+const CategoriasController = require('../controllers/categorias');
 
 let router = express.Router();
 
+
+router.get('/vista', (req, res) => {
+    const participantes = ParticipantesController.mostrar();
+    const patrocinantes = PatrocinantesController.mostrar();
+    const categorias = CategoriasController.mostrar();
+    const title = 'Patricipantes';
+    res.render('participantes', { title, participantes, patrocinantes, categorias });
+});
 
 router.post('/', (req, res) => {
     if (req.body.integrantes && req.body.categorias) {

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/") Home
+
+    ul 
+        each patrocinante in patrocinantes 
+            li #{ patrocinante. patrocinante }
+

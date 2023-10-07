@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/") Home
+
+    ul
+        each modalidad in modalidades
+            li #{ modalidad.modalidad }
+                ul
+                    each categoria in categorias 
+                        -if (categoria.idModalidad == modalidad.id)
+                            li #{ categoria.categoria }
+            br
+      

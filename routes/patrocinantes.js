@@ -20,5 +20,10 @@ router.post('/', (req, res) => {
     }
 });
 
+router.get('/vista', (req, res) => {
+    const patrocinantes = PatrocinantesController.mostrar();
+    const title = 'Patrocinantes';
+    res.render('patrocinantes', { title, patrocinantes });
+})
 
 module.exports = router;

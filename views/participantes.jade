@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/") Home
+
+    ul
+        each participante in participantes
+            li
+                strong Equipo #{ participante.id }
+                ul 
+
+                    li Integrantes:
+                        ul
+                            each integrante in participante.integrantes 
+                                li #{ integrante }
+                    li Categorias inscritas:
+                        ul 
+                            each idCategoria in participante.categorias
+                                each categoria in categorias 
+                                    -if (categoria.id == idCategoria)
+                                        li #{ categoria.categoria }
+                    li Patrocinantes: 
+                        ul
+                            each patrocinante in patrocinantes 
+                                -if (patrocinante.idParticipante == participante.id)
+                                    li #{ patrocinante.patrocinante }
+            br
+      
