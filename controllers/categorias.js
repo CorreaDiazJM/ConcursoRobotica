@@ -27,19 +27,21 @@ class CategoriasController {
         });
     }
 
-    // mostrar() {
-    //     return new Promise(())
-    // }
+    eliminar(idCategoria) {
+        return new Promise((resolve, reject) => {
+            CategoriasModel.eliminar(idCategoria)
+                .catch((err) => reject(err))
+                .then(() => resolve());
+        });
+    }
 
-    // eliminar(idCategoria) {
-    //     for (let i = 0; i < categorias.length; i++) {
-    //         const categoria = categorias[i];
-            
-    //         if (categoria.id === idCategoria) {
-    //             categorias.splice(i, 1);
-    //         }
-    //     }
-    // }
+    mostrar() {
+        return new Promise((resolve, reject) => {
+            CategoriasModel.mostrar()
+                .catch((err) => reject(err))
+                .then((categorias) => resolve(categorias));
+        });
+    }
 }
 
 module.exports = new CategoriasController();
