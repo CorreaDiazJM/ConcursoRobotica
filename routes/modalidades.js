@@ -2,24 +2,38 @@ const express = require('express');
 const ModalidadesController = require("../controllers/modalidades");
 const CategoriasController = require('../controllers/categorias');
 
-let router = express.Router();
+const router = express.Router();
 
 
 router.post('/', (req, res) => {
-    ModalidadesController.insertar(req.body)
-    res.send(ModalidadesController.mostrar());
+    ModalidadesController.insertar(req.body.modalidad)
+        .catch((message) => res.status(400).send({ message }))
+        .then(() => {
+            ModalidadesController.mostrarModalidad(req.body.modalidad)
+                .catch((err) => res.send(err))
+                .then((modalidad) => res.status(201).send(modalidad));
+        });
 });
 
 router.get('/', (req, res) => {
-    res.send(ModalidadesController.mostrar());
+    ModalidadesController.mostrar()
+        .catch((err) => res.send(err))
+        .then((modalidades) => res.send(modalidades));
 });
 
 router.get('/vista', (req, res) => {
-    const modalidades = ModalidadesController.mostrar();
-    const categorias = CategoriasController.mostrar();
-    const title = 'Modalidades';
+    ModalidadesController.mostrar()
+        .catch((err) => res.send(err))
+        .then((modalidades) => {
+            CategoriasController.mostrar()
+                .catch((err) => res.send(err))
+                .then((categorias) => {
+                    const title = 'Modalidades';
 
-    res.render('modalidades', { title, modalidades, categorias });
+                    res.render('modalidades', { title, modalidades, categorias });
+                });
+        });
+
 });
 
 module.exports = router;
