@@ -25,14 +25,6 @@ class ModalidadesController {
                 .then((modalidades) => resolve(modalidades));
         });
     }
-
-    existeModalidad(id) {
-        return new Promise((resolve, reject) => {
-            ModalidadesModel.mostrarModalidadPorId(id)
-                .catch(() => resolve(false))
-                .then(() => resolve(true));
-        });
-    }
 }
 
 

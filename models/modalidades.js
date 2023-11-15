@@ -24,6 +24,7 @@ class ModalidadesModel {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Modalidad WHERE id = ?;', [id], (err, results) => {
                 if (err) reject(err);
+                if (!results.length) reject('No existe la modalidad');
                 resolve(results[0]);
             });
         });

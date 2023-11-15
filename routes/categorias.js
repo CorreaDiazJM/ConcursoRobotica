@@ -7,8 +7,14 @@ let router = express.Router();
 router.post('/', (req, res) => {
     if (req.body.categoria && req.body.modalidad) {
         const { categoria, modalidad } = req.body;
-        CategoriasController.insertar(categoria, modalidad);
-        res.send(CategoriasController.mostrar());
+
+        CategoriasController.insertar(categoria, modalidad)
+            .catch((message) => res.status(400).send({ message }))
+            .then(() => {
+                CategoriasController.mostrarCategoria(categoria)
+                    .catch((err) => res.send(err))
+                    .then((categoria) => res.status(201).send(categoria));
+            });
     } else {
         res.status(400).json({
             message: 'Error en los datos de entrada'
@@ -19,8 +25,13 @@ router.post('/', (req, res) => {
 router.put('/:idCategoria', (req, res) => {
     if (req.body.categoria && req.body.modalidad) {
         const { categoria, modalidad } = req.body;
-        CategoriasController.editar(req.params.idCategoria, categoria, modalidad);
-        res.send(CategoriasController.mostrar());
+        CategoriasController.editar(req.params.idCategoria, categoria, modalidad)
+            .catch((err) => res.send(err))
+            .then(() => {
+                CategoriasController.mostrarCategoria(categoria)
+                    .catch((err) => res.send(err))
+                    .then((categoria) => res.status(200).send(categoria));
+            });
     } else {
         res.status(400).json({
             message: 'Error en los datos de entrada'
