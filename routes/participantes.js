@@ -1,6 +1,6 @@
 const express = require('express');
 const ParticipantesController = require("../controllers/participantes");
-const PatrocinantesController = require('../controllers/patrocinantes');
+const PatrocinantesController = require('../controllers/patrocinadores');
 const CategoriasController = require('../controllers/categorias');
 
 let router = express.Router();

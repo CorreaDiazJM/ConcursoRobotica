@@ -6,13 +6,19 @@ const router = express.Router();
 
 
 router.post('/', (req, res) => {
-    ModalidadesController.insertar(req.body.modalidad)
-        .catch((message) => res.status(400).send({ message }))
-        .then(() => {
-            ModalidadesController.mostrarModalidad(req.body.modalidad)
-                .catch((err) => res.send(err))
-                .then((modalidad) => res.status(201).send(modalidad));
+    if (req.body.modalidad) {
+        ModalidadesController.insertar(req.body.modalidad)
+            .catch((message) => res.status(400).send({ message }))
+            .then(() => {
+                ModalidadesController.mostrarModalidad(req.body.modalidad)
+                    .catch((err) => res.send(err))
+                    .then((modalidad) => res.status(201).send(modalidad));
+            });
+    } else {
+        res.status(400).json({
+            message: 'Error en los datos de entrada'
         });
+    }
 });
 
 router.get('/', (req, res) => {

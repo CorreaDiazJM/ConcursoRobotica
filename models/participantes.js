@@ -1,5 +1,9 @@
+const db = require('../database/connection');
+const EquiposModel = require('../models/equipo');
+
+
 class ParticipantesController {
-    insertar(integrantes, categorias) {
+    insertar(participante, idEquipo) {
         let existen = true;
 
         for (const idCategoria of categorias) {
@@ -36,6 +40,17 @@ class ParticipantesController {
     mostrar() {
         return participantes;
     }
+
+    eliminar(idParticipante) {
+        for (let i = 0; i < participantes.length; i++) {
+            const participante = participantes[i];
+            
+            if (participante.id === idParticipante) {
+                participantes.splice(i, 1);
+            }
+        }
+    }
 }
+
 
 module.exports = new ParticipantesController();

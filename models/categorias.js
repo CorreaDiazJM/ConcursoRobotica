@@ -8,7 +8,6 @@ class CategoriasModel {
             ModalidadesModel.mostrarModalidadPorId(idModalidad)
                 .catch((err) => reject(err))
                 .then(() => {
-                    console.log('PASO');
                     db.query(
                         'INSERT INTO Categoria (categoria, id_mod) VALUES (?, ?);',
                         [categoria, idModalidad],
@@ -62,10 +61,14 @@ class CategoriasModel {
 
     eliminar(idCategoria) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM Categoria WHERE id = ?;', [idCategoria], (err) => {
-                if (err) reject(err);
-                resolve();
-            });
+            this.mostrarCategoriaPorId(idCategoria)
+                .catch((err) => reject(err))
+                .then(() => {
+                    db.query('DELETE FROM Categoria WHERE id = ?', [idCategoria], (err) => {
+                        if (err) reject(err);
+                        resolve();
+                    });
+                });
         });
     }
 

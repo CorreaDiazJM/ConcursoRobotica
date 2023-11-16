@@ -6,7 +6,8 @@ let logger = require('morgan');
 
 let indexRouter = require('./routes/index');
 let modalidadesRouter = require('./routes/modalidades');
-let patrocinantesRouter = require('./routes/patrocinantes');
+let equiposRouter = require('./routes/equipo');
+let patrocinadoresRouter = require('./routes/patrocinadores');
 let participantesRouter = require('./routes/participantes');
 let categoriasRouter = require('./routes/categorias');
 
@@ -24,7 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/modalidades', modalidadesRouter);
-app.use('/patrocinantes', patrocinantesRouter);
+app.use('/equipos', equiposRouter);
+app.use('/patrocinadores', patrocinadoresRouter);
 app.use('/participantes', participantesRouter);
 app.use('/categorias', categoriasRouter);
 

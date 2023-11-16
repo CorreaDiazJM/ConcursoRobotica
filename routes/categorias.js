@@ -27,7 +27,7 @@ router.put('/:idCategoria', (req, res) => {
     if (req.body.categoria && req.body.modalidad) {
         const { categoria, modalidad } = req.body;
         CategoriasController.editar(req.params.idCategoria, categoria, modalidad)
-            .catch((message) => res.send({ message }))
+            .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 CategoriasController.mostrarCategoria(categoria)
                     .catch((err) => res.send(err))
@@ -40,8 +40,6 @@ router.put('/:idCategoria', (req, res) => {
     }
 });
 
-// REVISAR GET Y DELETE
-
 router.get('/', (req, res) => {
     CategoriasController.mostrar()
         .catch((err) => res.send(err))
@@ -49,8 +47,8 @@ router.get('/', (req, res) => {
 });
 
 router.delete('/:idCategoria', (req, res) => {
-    CategoriasController.eliminar(req.params)
-        .catch((err) => res.send(err))
+    CategoriasController.eliminar(req.params.idCategoria)
+        .catch((message) => res.status(400).send({ message }))
         .then(() => {
             CategoriasController.mostrar()
                 .catch((err) => res.send(err))
