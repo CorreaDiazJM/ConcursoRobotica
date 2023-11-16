@@ -2,55 +2,98 @@ const db = require('../database/connection');
 const EquiposModel = require('../models/equipo');
 
 
-class ParticipantesController {
-    insertar(participante, idEquipo) {
-        let existen = true;
-
-        for (const idCategoria of categorias) {
-            if (!CategoriasController.existeCategoria(idCategoria)) {
-                existen = false;
-            }
-        }
-
-        if (existen) {
-            const id = uuidv4();
-            participantes.push({ id, integrantes, categorias });
-        }
+class ParticipantesModel {
+    insertar(nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            EquiposModel.mostrarEquipoPorId(idEquipo)
+                .catch((err) => reject(err))
+                .then(() => {
+                    this.mostrarParticipante(nombre, apellido, idEquipo)
+                        .catch((err) => reject(err))
+                        .then((participante) => {
+                            if (!participante) {
+                                db.query(
+                                    'INSERT INTO Participante (nombre, apellido, id_equ) VALUES (?, ?, ?);',
+                                    [nombre, apellido, idEquipo],
+                                    (err) => {
+                                        if (err) reject(err);
+                                        resolve();
+                                    });
+                            } else {
+                                reject('El participante ya está registrado');
+                            }
+                        });
+                });
+        });
     }
 
-    editar(idParticipante, integrantes, categorias) {
-        let existen = true;
+    editar(idParticipante, nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            this.mostrarParticipantesPorId(idParticipante)
+                .catch((err) => reject(err))
+                .then(() => {
+                    EquiposModel.mostrarEquipoPorId(idEquipo)
+                        .catch((err) => reject(err))
+                        .then(() => {
+                            db.query(
+                                'UPDATE Participante SET nombre = ?, apellido = ?, id_equ = ? WHERE id = ?;',
+                                [nombre, apellido, idEquipo, idParticipante],
+                                (err) => {
+                                    if (err) reject(err);
+                                    resolve();
+                                });
+                        });
+                });
+        });
+    }
 
-        for (const idCategoria of categorias) {
-            if (!CategoriasController.existeCategoria(idCategoria)) {
-                existen = false;
-            }
-        }
+    mostrarParticipantesPorId(idParticipante) {
+        return new Promise((resolve, reject) => {
+            db.query(
+                'SELECT * FROM Participante WHERE id = ?;',
+                [idParticipante],
+                (err, results) => {
+                    if (err) reject(err);
+                    if (!results.length) reject('No existe el participante');
+                    resolve(results[0]);
+                });
+        });
+    }
 
-        if (existen) {
-            for (const participante of participantes) {
-                if (participante.id === idParticipante) {
-                    participante.integrantes = integrantes;
-                    participante.categorias = categorias
-                }
-            }
-        }
+    mostrarParticipante(nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            db.query(
+                'SELECT * FROM Participante WHERE nombre = ? AND apellido = ? AND id_equ = ?;',
+                [nombre, apellido, idEquipo],
+                (err, results) => {
+                    if (err) reject(err);
+                    resolve(results[0]);
+                });
+        });
     }
 
     mostrar() {
-        return participantes;
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM Participante;', (err, results) => {
+                if (err) reject(err);
+                resolve(results);
+            });
+        });
     }
 
     eliminar(idParticipante) {
-        for (let i = 0; i < participantes.length; i++) {
-            const participante = participantes[i];
-            
-            if (participante.id === idParticipante) {
-                participantes.splice(i, 1);
-            }
-        }
+        return new Promise((resolve, reject) => {
+            this.mostrarParticipantesPorId(idParticipante)
+                .catch((err) => reject(err))
+                .then(() => {
+                    db.query('DELETE FROM Participante WHERE id = ?', [idParticipante], (err) => {
+                        if (err) reject(err);
+                        resolve();
+                    });
+                });
+        });
     }
 }
 
 
-module.exports = new ParticipantesController();
+module.exports = new ParticipantesModel();

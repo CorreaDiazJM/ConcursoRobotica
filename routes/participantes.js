@@ -1,7 +1,6 @@
 const express = require('express');
 const ParticipantesController = require("../controllers/participantes");
-const PatrocinantesController = require('../controllers/patrocinadores');
-const CategoriasController = require('../controllers/categorias');
+const participantes = require('../models/participantes');
 
 let router = express.Router();
 
@@ -15,10 +14,15 @@ router.get('/vista', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if (req.body.integrantes && req.body.categorias) {
-        const { integrantes, categorias } = req.body;
-        ParticipantesController.insertar(integrantes, categorias);
-        res.send(ParticipantesController.mostrar());
+    if (req.body.nombre && req.body.apellido && req.body.equipo) {
+        const { nombre, apellido, equipo } = req.body;
+        ParticipantesController.insertar(nombre, apellido, equipo)
+            .catch((message) => res.status(400).send({ message }))
+            .then(() => {
+                ParticipantesController.mostrarParticipante(nombre, apellido, equipo)
+                    .catch((err) => res.send(err))
+                    .then((participante) => res.status(201).send(participante));
+            });
     } else {
         res.status(400).json({
             message: 'Error en los datos de entrada'
@@ -27,10 +31,15 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:idParticipante', (req, res) => {
-    if (req.body.integrantes && req.body.categorias) {
-        const { integrantes, categorias } = req.body;
-        ParticipantesController.editar(req.params.idParticipante, integrantes, categorias);
-        res.send(ParticipantesController.mostrar());
+    if (req.body.nombre && req.body.apellido && req.body.equipo) {
+        const { nombre, apellido, equipo } = req.body;
+        ParticipantesController.editar(req.params.idParticipante, nombre, apellido, equipo)
+            .catch((message) => res.status(400).send({ message }))
+            .then(() => {
+                ParticipantesController.mostrarParticipante(nombre, apellido, equipo)
+                    .catch((err) => res.send(err))
+                    .then((participante) => res.send(participante));
+            });
     } else {
         res.status(400).json({
             message: 'Error en los datos de entrada'
@@ -39,41 +48,19 @@ router.put('/:idParticipante', (req, res) => {
 });
 
 router.delete('/:idParticipante', (req, res) => {
-    if (ParticipantesController.existeParticipante(req.params.idParticipante)) {
-        ParticipantesController.eliminar(req.params.idParticipante);
-        res.send(ParticipantesController.mostrar());
-    } else {
-        res.status(404).json({
-            message: 'No existe el equipo participante ' + req.params.idParticipante
+    ParticipantesController.eliminar(req.params.idParticipante)
+        .catch((message) => res.status(400).send({ message }))
+        .then(() => {
+            ParticipantesController.mostrar()
+                .catch((err) => res.send(err))
+                .then((participantes) => res.send(participantes));
         });
-    }
 });
 
 router.get('/', (req, res) => {
-    res.send(ParticipantesController.mostrar());
-});
-
-router.get('/:idCategoria', (req, res) => {
-    const inscritos = ParticipantesController.mostrarEquiposPorInscripcion(req.params.idCategoria);
-
-    if (inscritos && inscritos.length) {
-        res.send(inscritos);
-    } else {
-        res.json({
-            message: 'No se encuentran equipos inscritos'
-        });
-    }
-});
-
-router.delete('/:idParticipante/:idCategoria', (req, res) => {
-    if (ParticipantesController.existeParticipante(req.params.idParticipante)) {
-        ParticipantesController.eliminarInscripcion(req.params.idParticipante, req.params.idCategoria);
-        res.send(ParticipantesController.mostrar());
-    } else {
-        res.status(404).json({
-            message: 'No existe el equipo participante ' + req.params.idParticipante
-        });
-    }
+    ParticipantesController.mostrar()
+        .catch((err) => res.send(err))
+        .then((participantes) => res.send(participantes));
 });
 
 

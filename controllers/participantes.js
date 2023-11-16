@@ -1,41 +1,47 @@
+const ParticipantesModel = require('../models/participantes');
+
+
 class ParticipantesController {
-    insertar(integrantes, categorias) {
-        let existen = true;
-
-        for (const idCategoria of categorias) {
-            if (!CategoriasController.existeCategoria(idCategoria)) {
-                existen = false;
-            }
-        }
-
-        if (existen) {
-            const id = uuidv4();
-            participantes.push({ id, integrantes, categorias });
-        }
+    insertar(nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.insertar(nombre, apellido, idEquipo)
+                .catch((err) => reject(err))
+                .then(() => resolve());
+        });
     }
 
-    editar(idParticipante, integrantes, categorias) {
-        let existen = true;
-
-        for (const idCategoria of categorias) {
-            if (!CategoriasController.existeCategoria(idCategoria)) {
-                existen = false;
-            }
-        }
-
-        if (existen) {
-            for (const participante of participantes) {
-                if (participante.id === idParticipante) {
-                    participante.integrantes = integrantes;
-                    participante.categorias = categorias
-                }
-            }
-        }
+    editar(idParticipante, nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.editar(idParticipante, nombre, apellido, idEquipo)
+                .catch((err) => reject(err))
+                .then(() => resolve());
+        });
     }
 
     mostrar() {
-        return participantes;
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.mostrar()
+                .catch((err) => reject(err))
+                .then((participantes) => resolve(participantes));
+        });
+    }
+
+    mostrarParticipante(nombre, apellido, idEquipo) {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.mostrarParticipante(nombre, apellido, idEquipo)
+                .catch((err) => reject(err))
+                .then((participante) => resolve(participante));
+        });
+    }
+
+    eliminar(idParticipante) {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.eliminar(idParticipante)
+                .catch((err) => reject(err))
+                .then(() => resolve());
+        });
     }
 }
+
 
 module.exports = new ParticipantesController();
