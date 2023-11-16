@@ -27,19 +27,5 @@ router.get('/', (req, res) => {
         .then((modalidades) => res.send(modalidades));
 });
 
-router.get('/vista', (req, res) => {
-    ModalidadesController.mostrar()
-        .catch((err) => res.send(err))
-        .then((modalidades) => {
-            CategoriasController.mostrar()
-                .catch((err) => res.send(err))
-                .then((categorias) => {
-                    const title = 'Modalidades';
-
-                    res.render('modalidades', { title, modalidades, categorias });
-                });
-        });
-
-});
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const express = require('express');
 const CategoriasController = require('../controllers/categorias');
-const categorias = require('../models/categorias');
 
 let router = express.Router();
 
@@ -55,5 +54,17 @@ router.delete('/:idCategoria', (req, res) => {
                 .then((categorias) => res.send(categorias));
         });
 });
+
+//NUEVA RUTA
+router.get('/porModalidad', (req, res) => {
+    CategoriasController.mostrarCategoriasPorModalidad()
+        .catch((err) => res.status(400).send(err))
+        .then((modalidades) => res.render('modalidades', {
+            title: 'Modalidades',
+            modalidades
+        }));
+
+});
+
 
 module.exports = router;

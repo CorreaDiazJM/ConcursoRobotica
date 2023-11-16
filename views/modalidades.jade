@@ -9,8 +9,7 @@ block content
         each modalidad in modalidades
             li #{ modalidad.modalidad }
                 ul
-                    each categoria in categorias 
-                        -if (categoria.idModalidad == modalidad.id)
-                            li #{ categoria.categoria }
+                    each categoria in modalidad.categorias
+                        li #{ categoria }
             br
       
