@@ -41,6 +41,38 @@ class ParticipantesController {
                 .then(() => resolve());
         });
     }
+
+    mostrarParticipantesPorEquipo() {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.mostrarParticipantesPorEquipo()
+                .catch((err) => reject(err))
+                .then((participantes) => {
+                    const equipos = [];
+                    let ultimo_equipo = 0;
+
+                    for (const participante of participantes) {
+                        const { nombre, apellido } = participante;
+
+                        if (!equipos.length) {
+                            equipos.push({
+                                equipo: participante.equipo,
+                                participantes: [{ nombre, apellido }]
+                            });
+                        } else if (participante.equipo === equipos[ultimo_equipo].equipo) {
+                            equipos[ultimo_equipo].participantes.push({ nombre, apellido });
+                        } else {
+                            ultimo_equipo++;
+                            equipos.push({
+                                equipo: participante.equipo,
+                                participantes: [{ nombre, apellido }]
+                            })
+                        }
+                    }
+
+                    resolve(equipos);
+                });
+        });
+    }
 }
 
 

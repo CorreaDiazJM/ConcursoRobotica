@@ -1,16 +1,16 @@
 const express = require('express');
 const ParticipantesController = require("../controllers/participantes");
-const participantes = require('../models/participantes');
 
 let router = express.Router();
 
-
-router.get('/vista', (req, res) => {
-    const participantes = ParticipantesController.mostrar();
-    const patrocinantes = PatrocinantesController.mostrar();
-    const categorias = CategoriasController.mostrar();
-    const title = 'Patricipantes';
-    res.render('participantes', { title, participantes, patrocinantes, categorias });
+// NUEVA RUTA
+router.get('/porEquipo', (req, res) => {
+    ParticipantesController.mostrarParticipantesPorEquipo()
+        .catch((message) => res.status(400).send({ message }))
+        .then((equipos) => res.render('participantes', {
+            title: 'Equipos',
+            equipos
+        }));
 });
 
 router.post('/', (req, res) => {
