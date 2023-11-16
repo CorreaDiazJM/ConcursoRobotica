@@ -25,6 +25,38 @@ class PatrocinadoresController {
                 .then((patrocinador) => resolve(patrocinador));
         });
     }
+
+    mostrarEquiposPatrocinados() {
+        return new Promise((resolve, reject) => {
+            PatrocinadoresModel.mostrarEquiposPatrocinados()
+                .catch((err) => reject(err))
+                .then((patrocinadores) => {
+                    const equipos = [];
+                    let ultimo_patrocinador = 0;
+
+                    for (const pat of patrocinadores) {
+                        const { patrocinador, equipo } = pat;
+
+                        if (!equipos.length) {
+                            equipos.push({
+                                patrocinador: patrocinador,
+                                equipos_patrocinados: [equipo]
+                            });
+                        } else if (patrocinador === equipos[ultimo_patrocinador].patrocinador) {
+                            equipos[ultimo_patrocinador].equipos_patrocinados.push(equipo);
+                        } else {
+                            ultimo_patrocinador++;
+                            equipos.push({
+                                patrocinador: patrocinador,
+                                equipos_patrocinados: [equipo]
+                            });
+                        }
+                    }
+
+                    resolve(equipos);
+                });
+        });
+    }
 }
 
 

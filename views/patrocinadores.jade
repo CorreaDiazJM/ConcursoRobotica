@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/") Home
+
+    ul
+        each equipo in equipos
+            li
+                strong #{ equipo.patrocinador }
+                p Equipos patrocinados:
+                    ul
+                        each patrocinado in equipo.equipos_patrocinados
+                            li #{ patrocinado }
+            br
+      

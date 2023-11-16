@@ -38,6 +38,17 @@ class PatrocinadoresModel {
             });
         });
     }
+
+    mostrarEquiposPatrocinados() {
+        return new Promise((resolve, reject) => {
+            db.query(
+                'SELECT patrocinador, equipo FROM Patrocinador INNER JOIN Equipo ON Patrocinador.id = id_pat ORDER BY patrocinador;',
+                (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
+                });
+        });
+    }
 }
 
 

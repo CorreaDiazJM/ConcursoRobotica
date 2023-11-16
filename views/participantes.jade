@@ -9,7 +9,7 @@ block content
         each equipo in equipos
             li
                 strong #{ equipo.equipo }
-                p
+                p Integrantes:
                     ul
                         each participante in equipo.participantes
                             li #{ participante.apellido }, #{ participante.nombre }

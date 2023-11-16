@@ -26,10 +26,14 @@ router.post('/', (req, res) => {
     }
 });
 
-router.get('/vista', (req, res) => {
-    const patrocinantes = PatrocinadoresController.mostrar();
-    const title = 'Patrocinantes';
-    res.render('patrocinantes', { title, patrocinantes });
+//NUEVA RUTA
+router.get('/equiposPatrocinados', (req, res) => {
+    PatrocinadoresController.mostrarEquiposPatrocinados()
+        .catch((err) => res.send(err))
+        .then((equipos) => res.render('patrocinadores', {
+            title: 'Patrocinadores',
+            equipos
+        }));
 })
 
 module.exports = router;
