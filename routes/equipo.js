@@ -1,7 +1,7 @@
 const express = require('express');
 const EquiposController = require('../controllers/equipo');
 
-let router = express.Router();
+const router = express.Router();
 
 
 router.post('/', async (req, res) => {
@@ -44,6 +44,16 @@ router.get('/', async (req, res) => {
     await EquiposController.mostrar()
         .catch((err) => res.send(err))
         .then((equipos) => res.send(equipos));
+});
+
+// NUEVA RUTA
+router.get('/inscripciones', async (req, res) => {
+    await EquiposController.mostrarInscripciones()
+        .catch((err) => res.send(err))
+        .then((equipos) => res.render('inscripciones', {
+            title: 'Inscripciones',
+            equipos
+        }));
 });
 
 router.get('/:idCategoria', async (req, res) => {
@@ -94,15 +104,6 @@ router.put('/:idEquipo', async (req, res) => {
             message: 'Error en los datos de entrada'
         });
     }
-});
-
-router.get('/inscripciones', async (req, res) => {
-    await EquiposController.mostrarInscripciones()
-        .catch((err) => res.send(err))
-        .then((equipos) => res.render('inscripciones', {
-            title: 'Inscripciones',
-            equipos
-        }));
 });
 
 

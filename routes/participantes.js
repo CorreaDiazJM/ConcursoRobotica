@@ -1,7 +1,7 @@
 const express = require('express');
 const ParticipantesController = require("../controllers/participantes");
 
-let router = express.Router();
+const router = express.Router();
 
 // NUEVA RUTA
 router.get('/porEquipo', async (req, res) => {

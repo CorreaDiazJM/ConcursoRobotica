@@ -1,7 +1,7 @@
 const express = require('express');
 const CategoriasController = require('../controllers/categorias');
 
-let router = express.Router();
+const router = express.Router();
 
 
 router.post('/', async (req, res) => {

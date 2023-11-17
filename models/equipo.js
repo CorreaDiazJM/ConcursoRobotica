@@ -172,6 +172,7 @@ class EquiposModel {
             db.query(
                 'SELECT categoria, equipo FROM Categoria_Equipo INNER JOIN Equipo ON Equipo.id = id_equ INNER JOIN Categoria ON Categoria.id = id_cat ORDER BY categoria;',
                 (err, results) => {
+                    console.log('aqui son lo resultados: ', results);
                     if (err) reject(err);
                     resolve(results);
                 });
