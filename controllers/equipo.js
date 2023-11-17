@@ -2,7 +2,7 @@ const EquiposModel = require('../models/equipo');
 
 
 class EquiposController {
-    insertar(equipo, idPatrocinador) {
+    async insertar(equipo, idPatrocinador) {
         return new Promise((resolve, reject) => {
             EquiposModel.insertar(equipo, idPatrocinador)
                 .catch((err) => reject(err))
@@ -10,7 +10,7 @@ class EquiposController {
         });
     }
 
-    inscribirEnCategoria(idEquipo, idCategoria) {
+    async inscribirEnCategoria(idEquipo, idCategoria) {
         return new Promise((resolve, reject) => {
             EquiposModel.inscribirEnCategoria(idEquipo, idCategoria)
                 .catch((err) => reject(err))
@@ -18,7 +18,7 @@ class EquiposController {
         });
     }
 
-    eliminarInscripcion(idEquipo, idCategoria) {
+    async eliminarInscripcion(idEquipo, idCategoria) {
         return new Promise((resolve, reject) => {
             EquiposModel.eliminarInscripcion(idEquipo, idCategoria)
                 .catch((err) => reject(err))
@@ -26,7 +26,7 @@ class EquiposController {
         });
     }
 
-    mostrarCategoriasInscritas(idEquipo) {
+    async mostrarCategoriasInscritas(idEquipo) {
         return new Promise((resolve, reject) => {
             EquiposModel.mostrarCategoriasInscritas(idEquipo)
                 .catch((err) => reject(err))
@@ -34,7 +34,7 @@ class EquiposController {
         });
     }
 
-    mostrarEquipo(equipo) {
+    async mostrarEquipo(equipo) {
         return new Promise((resolve, reject) => {
             EquiposModel.mostrarEquipoPorNombre(equipo)
                 .catch((err) => reject(err))
@@ -42,7 +42,7 @@ class EquiposController {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             EquiposModel.mostrar()
                 .catch((err) => reject(err))
@@ -50,7 +50,7 @@ class EquiposController {
         });
     }
 
-    eliminar(idEquipo) {
+    async eliminar(idEquipo) {
         return new Promise((resolve, reject) => {
             EquiposModel.eliminar(idEquipo)
                 .catch((err) => reject(err))
@@ -58,7 +58,7 @@ class EquiposController {
         });
     }
 
-    mostrarEquiposPorCategoria(idCategoria) {
+    async mostrarEquiposPorCategoria(idCategoria) {
         return new Promise((resolve, reject) => {
             EquiposModel.mostrarEquiposPorCategoria(idCategoria)
                 .catch((err) => reject(err))
@@ -66,11 +66,43 @@ class EquiposController {
         });
     }
 
-    editar(idEquipo, equipo) {
+    async editar(idEquipo, equipo) {
         return new Promise((resolve, reject) => {
             EquiposModel.editar(idEquipo, equipo)
                 .catch((err) => reject(err))
                 .then(() => resolve());
+        });
+    }
+
+    async mostrarInscripciones() {
+        return new Promise((resolve, reject) => {
+            EquiposModel.mostrarInscripciones()
+                .catch((err) => reject(err))
+                .then((categorias) => {
+                    const equipos = [];
+                    let ultima_categoria = 0;
+
+                    for (const cat of categorias) {
+                        const { categoria, equipo } = cat;
+
+                        if (!equipos.length) {
+                            equipos.push({
+                                categoria,
+                                equipos: [equipo]
+                            });
+                        } else if (categoria === equipos[ultima_categoria].categoria) {
+                            equipos[ultima_categoria].equipos.push(equipo);
+                        } else {
+                            ultima_categoria++;
+                            equipos.push({
+                                categoria,
+                                equipos: [equipo]
+                            });
+                        }
+                    }
+
+                    resolve(equipos);
+                });
         });
     }
 }

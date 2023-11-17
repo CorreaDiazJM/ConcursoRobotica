@@ -4,8 +4,8 @@ const ParticipantesController = require("../controllers/participantes");
 let router = express.Router();
 
 // NUEVA RUTA
-router.get('/porEquipo', (req, res) => {
-    ParticipantesController.mostrarParticipantesPorEquipo()
+router.get('/porEquipo', async (req, res) => {
+    await ParticipantesController.mostrarParticipantesPorEquipo()
         .catch((message) => res.status(400).send({ message }))
         .then((equipos) => res.render('participantes', {
             title: 'Equipos',
@@ -13,10 +13,11 @@ router.get('/porEquipo', (req, res) => {
         }));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     if (req.body.nombre && req.body.apellido && req.body.equipo) {
         const { nombre, apellido, equipo } = req.body;
-        ParticipantesController.insertar(nombre, apellido, equipo)
+
+        await ParticipantesController.insertar(nombre, apellido, equipo)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 ParticipantesController.mostrarParticipante(nombre, apellido, equipo)
@@ -30,10 +31,11 @@ router.post('/', (req, res) => {
     }
 });
 
-router.put('/:idParticipante', (req, res) => {
+router.put('/:idParticipante', async (req, res) => {
     if (req.body.nombre && req.body.apellido && req.body.equipo) {
         const { nombre, apellido, equipo } = req.body;
-        ParticipantesController.editar(req.params.idParticipante, nombre, apellido, equipo)
+
+        await ParticipantesController.editar(req.params.idParticipante, nombre, apellido, equipo)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 ParticipantesController.mostrarParticipante(nombre, apellido, equipo)
@@ -47,8 +49,8 @@ router.put('/:idParticipante', (req, res) => {
     }
 });
 
-router.delete('/:idParticipante', (req, res) => {
-    ParticipantesController.eliminar(req.params.idParticipante)
+router.delete('/:idParticipante', async (req, res) => {
+    await ParticipantesController.eliminar(req.params.idParticipante)
         .catch((message) => res.status(400).send({ message }))
         .then(() => {
             ParticipantesController.mostrar()
@@ -57,8 +59,8 @@ router.delete('/:idParticipante', (req, res) => {
         });
 });
 
-router.get('/', (req, res) => {
-    ParticipantesController.mostrar()
+router.get('/', async (req, res) => {
+    await ParticipantesController.mostrar()
         .catch((err) => res.send(err))
         .then((participantes) => res.send(participantes));
 });

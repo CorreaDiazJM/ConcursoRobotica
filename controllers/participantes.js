@@ -2,7 +2,7 @@ const ParticipantesModel = require('../models/participantes');
 
 
 class ParticipantesController {
-    insertar(nombre, apellido, idEquipo) {
+    async insertar(nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             ParticipantesModel.insertar(nombre, apellido, idEquipo)
                 .catch((err) => reject(err))
@@ -10,7 +10,7 @@ class ParticipantesController {
         });
     }
 
-    editar(idParticipante, nombre, apellido, idEquipo) {
+    async editar(idParticipante, nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             ParticipantesModel.editar(idParticipante, nombre, apellido, idEquipo)
                 .catch((err) => reject(err))
@@ -18,7 +18,7 @@ class ParticipantesController {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             ParticipantesModel.mostrar()
                 .catch((err) => reject(err))
@@ -26,7 +26,7 @@ class ParticipantesController {
         });
     }
 
-    mostrarParticipante(nombre, apellido, idEquipo) {
+    async mostrarParticipante(nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             ParticipantesModel.mostrarParticipante(nombre, apellido, idEquipo)
                 .catch((err) => reject(err))
@@ -34,7 +34,7 @@ class ParticipantesController {
         });
     }
 
-    eliminar(idParticipante) {
+    async eliminar(idParticipante) {
         return new Promise((resolve, reject) => {
             ParticipantesModel.eliminar(idParticipante)
                 .catch((err) => reject(err))
@@ -42,7 +42,7 @@ class ParticipantesController {
         });
     }
 
-    mostrarParticipantesPorEquipo() {
+    async mostrarParticipantesPorEquipo() {
         return new Promise((resolve, reject) => {
             ParticipantesModel.mostrarParticipantesPorEquipo()
                 .catch((err) => reject(err))

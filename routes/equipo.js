@@ -4,11 +4,11 @@ const EquiposController = require('../controllers/equipo');
 let router = express.Router();
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     if (req.body.equipo && req.body.patrocinador) {
         const { equipo, patrocinador } = req.body;
 
-        EquiposController.insertar(equipo, patrocinador)
+        await EquiposController.insertar(equipo, patrocinador)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 EquiposController.mostrarEquipo(req.body.equipo)
@@ -22,11 +22,11 @@ router.post('/', (req, res) => {
     }
 });
 
-router.post('/inscribir', (req, res) => {
+router.post('/inscribir', async (req, res) => {
     if (req.body.equipo && req.body.categoria) {
         const { equipo, categoria } = req.body;
 
-        EquiposController.inscribirEnCategoria(equipo, categoria)
+        await EquiposController.inscribirEnCategoria(equipo, categoria)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 EquiposController.mostrarCategoriasInscritas(equipo)
@@ -40,23 +40,23 @@ router.post('/inscribir', (req, res) => {
     }
 });
 
-router.get('/', (req, res) => {
-    EquiposController.mostrar()
+router.get('/', async (req, res) => {
+    await EquiposController.mostrar()
         .catch((err) => res.send(err))
         .then((equipos) => res.send(equipos));
 });
 
-router.get('/:idCategoria', (req, res) => {
-    EquiposController.mostrarEquiposPorCategoria(req.params.idCategoria)
+router.get('/:idCategoria', async (req, res) => {
+    await EquiposController.mostrarEquiposPorCategoria(req.params.idCategoria)
         .catch((message) => res.status(400).send({ message }))
         .then((equipos) => res.send(equipos));
 });
 
-router.delete('/inscripcion', (req, res) => {
+router.delete('/inscripcion', async (req, res) => {
     if (req.body.equipo && req.body.categoria) {
         const { equipo, categoria } = req.body;
 
-        EquiposController.eliminarInscripcion(equipo, categoria)
+        await EquiposController.eliminarInscripcion(equipo, categoria)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 EquiposController.mostrarCategoriasInscritas(equipo)
@@ -70,8 +70,8 @@ router.delete('/inscripcion', (req, res) => {
     }
 });
 
-router.delete('/:idEquipo', (req, res) => {
-    EquiposController.eliminar(req.params.idEquipo)
+router.delete('/:idEquipo', async (req, res) => {
+    await EquiposController.eliminar(req.params.idEquipo)
         .catch((message) => res.status(400).send({ message }))
         .then(() => {
             EquiposController.mostrar()
@@ -80,9 +80,9 @@ router.delete('/:idEquipo', (req, res) => {
         });
 });
 
-router.put('/:idEquipo', (req, res) => {
+router.put('/:idEquipo', async (req, res) => {
     if (req.body.equipo) {
-        EquiposController.editar(req.params.idEquipo, req.body.equipo)
+        await EquiposController.editar(req.params.idEquipo, req.body.equipo)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 EquiposController.mostrarEquipo(req.body.equipo)
@@ -94,6 +94,15 @@ router.put('/:idEquipo', (req, res) => {
             message: 'Error en los datos de entrada'
         });
     }
+});
+
+router.get('/inscripciones', async (req, res) => {
+    await EquiposController.mostrarInscripciones()
+        .catch((err) => res.send(err))
+        .then((equipos) => res.render('inscripciones', {
+            title: 'Inscripciones',
+            equipos
+        }));
 });
 
 

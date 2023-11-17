@@ -5,9 +5,9 @@ const CategoriasController = require('../controllers/categorias');
 const router = express.Router();
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     if (req.body.modalidad) {
-        ModalidadesController.insertar(req.body.modalidad)
+        await ModalidadesController.insertar(req.body.modalidad)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 ModalidadesController.mostrarModalidad(req.body.modalidad)
@@ -21,8 +21,8 @@ router.post('/', (req, res) => {
     }
 });
 
-router.get('/', (req, res) => {
-    ModalidadesController.mostrar()
+router.get('/', async (req, res) => {
+    await ModalidadesController.mostrar()
         .catch((err) => res.send(err))
         .then((modalidades) => res.send(modalidades));
 });

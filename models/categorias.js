@@ -3,7 +3,7 @@ const ModalidadesModel = require('./modalidades');
 
 
 class CategoriasModel {
-    insertar(categoria, idModalidad) {
+    async insertar(categoria, idModalidad) {
         return new Promise((resolve, reject) => {
             ModalidadesModel.mostrarModalidadPorId(idModalidad)
                 .catch((err) => reject(err))
@@ -20,7 +20,7 @@ class CategoriasModel {
         });
     }
 
-    mostrarCategoriaPorId(id) {
+    async mostrarCategoriaPorId(id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Categoria WHERE id = ?', [id], (err, results) => {
                 if (err) reject(err);
@@ -30,7 +30,7 @@ class CategoriasModel {
         });
     }
 
-    mostrarCategoriaPorNombre(categoria) {
+    async mostrarCategoriaPorNombre(categoria) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Categoria WHERE categoria = ?', [categoria], (err, results) => {
                 if (err) reject(err);
@@ -39,7 +39,7 @@ class CategoriasModel {
         });
     }
 
-    editar(idCategoria, categoria, idModalidad) {
+    async editar(idCategoria, categoria, idModalidad) {
         return new Promise((resolve, reject) => {
             ModalidadesModel.mostrarModalidadPorId(idModalidad)
                 .catch((err) => reject(err))
@@ -59,7 +59,7 @@ class CategoriasModel {
         });
     }
 
-    eliminar(idCategoria) {
+    async eliminar(idCategoria) {
         return new Promise((resolve, reject) => {
             this.mostrarCategoriaPorId(idCategoria)
                 .catch((err) => reject(err))
@@ -72,7 +72,7 @@ class CategoriasModel {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Categoria;', (err, results) => {
                 if (err) reject(err);
@@ -81,7 +81,7 @@ class CategoriasModel {
         });
     }
 
-    mostrarCategoriasPorModalidad() {
+    async mostrarCategoriasPorModalidad() {
         return new Promise((resolve, reject) => {
             db.query(
                 'SELECT modalidad, categoria FROM Modalidad INNER JOIN Categoria ON Modalidad.id = id_mod ORDER BY modalidad;',

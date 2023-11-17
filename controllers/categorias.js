@@ -2,7 +2,7 @@ const CategoriasModel = require('../models/categorias');
 
 
 class CategoriasController {
-    insertar(categoria, idModalidad) {
+    async insertar(categoria, idModalidad) {
         return new Promise((resolve, reject) => {
             CategoriasModel.insertar(categoria, idModalidad)
                 .catch((err) => reject(err))
@@ -10,7 +10,7 @@ class CategoriasController {
         });
     }
 
-    mostrarCategoria(categoria) {
+    async mostrarCategoria(categoria) {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrarCategoriaPorNombre(categoria)
                 .catch((err) => reject(err))
@@ -18,7 +18,7 @@ class CategoriasController {
         });
     }
 
-    editar(idCategoria, categoria, idModalidad) {
+    async editar(idCategoria, categoria, idModalidad) {
         return new Promise((resolve, reject) => {
             CategoriasModel.editar(idCategoria, categoria, idModalidad)
                 .catch((err) => reject(err))
@@ -26,7 +26,7 @@ class CategoriasController {
         });
     }
 
-    eliminar(idCategoria) {
+    async eliminar(idCategoria) {
         return new Promise((resolve, reject) => {
             CategoriasModel.eliminar(idCategoria)
                 .catch((err) => reject(err))
@@ -34,7 +34,7 @@ class CategoriasController {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrar()
                 .catch((err) => reject(err))
@@ -42,7 +42,7 @@ class CategoriasController {
         });
     }
 
-    mostrarCategoriasPorModalidad() {
+    async mostrarCategoriasPorModalidad() {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrarCategoriasPorModalidad()
                 .catch((err) => reject(err))

@@ -4,7 +4,7 @@ const CategoriasModel = require('./categorias');
 
 
 class EquiposModel {
-    insertar(equipo, idPatrocinador) {
+    async insertar(equipo, idPatrocinador) {
         return new Promise((resolve, reject) => {
             PatrocinadoresModel.mostrarPatrocinadorPorId(idPatrocinador)
                 .catch((err) => reject(err))
@@ -17,7 +17,7 @@ class EquiposModel {
         });
     }
 
-    inscribirEnCategoria(idEquipo, idCategoria) {
+    async inscribirEnCategoria(idEquipo, idCategoria) {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrarCategoriaPorId(idCategoria)
                 .catch((err) => reject(err))
@@ -52,7 +52,7 @@ class EquiposModel {
         });
     }
 
-    eliminarInscripcion(idEquipo, idCategoria) {
+    async eliminarInscripcion(idEquipo, idCategoria) {
         return new Promise((resolve, reject) => {
             this.mostrarCategoriasInscritas(idEquipo)
                 .catch((err) => reject(err))
@@ -81,7 +81,7 @@ class EquiposModel {
         });
     }
 
-    mostrarEquipoPorId(id) {
+    async mostrarEquipoPorId(id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Equipo WHERE id = ?;', [id], (err, results) => {
                 if (err) reject(err);
@@ -91,7 +91,7 @@ class EquiposModel {
         });
     }
 
-    mostrarEquipoPorNombre(equipo) {
+    async mostrarEquipoPorNombre(equipo) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Equipo WHERE equipo = ?;', [equipo], (err, results) => {
                 if (err) reject(err);
@@ -100,7 +100,7 @@ class EquiposModel {
         });
     }
 
-    mostrarCategoriasInscritas(id) {
+    async mostrarCategoriasInscritas(id) {
         return new Promise((resolve, reject) => {
             this.mostrarEquipoPorId(id)
                 .catch((err) => reject(err))
@@ -116,7 +116,7 @@ class EquiposModel {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Equipo;', (err, results) => {
                 if (err) reject(err);
@@ -125,7 +125,7 @@ class EquiposModel {
         })
     }
 
-    eliminar(idEquipo) {
+    async eliminar(idEquipo) {
         return new Promise((resolve, reject) => {
             this.mostrarEquipoPorId(idEquipo)
                 .catch((err) => reject(err))
@@ -138,7 +138,7 @@ class EquiposModel {
         });
     }
 
-    mostrarEquiposPorCategoria(idCategoria) {
+    async mostrarEquiposPorCategoria(idCategoria) {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrarCategoriaPorId(idCategoria)
                 .catch((err) => reject(err))
@@ -154,7 +154,7 @@ class EquiposModel {
         });
     }
 
-    editar(idEquipo, equipo) {
+    async editar(idEquipo, equipo) {
         return new Promise((resolve, reject) => {
             this.mostrarEquipoPorId(idEquipo)
                 .catch((err) => reject(err))
@@ -163,6 +163,17 @@ class EquiposModel {
                         if (err) reject('Ese nombre ya se encuentra registrado');
                         resolve();
                     });
+                });
+        });
+    }
+
+    async mostrarInscripciones() {
+        return new Promise((resolve, reject) => {
+            db.query(
+                'SELECT categoria, equipo FROM Categoria_Equipo INNER JOIN Equipo ON Equipo.id = id_equ INNER JOIN Categoria ON Categoria.id = id_cat ORDER BY categoria;',
+                (err, results) => {
+                    if (err) reject(err);
+                    resolve(results);
                 });
         });
     }

@@ -2,7 +2,7 @@ const PatrocinadoresModel = require('../models/patrocinadores');
 
 
 class PatrocinadoresController {
-    insertar(patrocinador) {
+    async insertar(patrocinador) {
         return new Promise((resolve, reject) => {
             PatrocinadoresModel.insertar(patrocinador)
                 .catch((err) => reject(err))
@@ -10,7 +10,7 @@ class PatrocinadoresController {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             PatrocinadoresModel.mostrar()
                 .catch((err) => reject(err))
@@ -18,7 +18,7 @@ class PatrocinadoresController {
         });
     }
 
-    mostrarPatrocinador(patrocinador) {
+    async mostrarPatrocinador(patrocinador) {
         return new Promise((resolve, reject) => {
             PatrocinadoresModel.mostrarPatrocinadorPorNombre(patrocinador)
                 .catch((err) => reject(err))
@@ -26,7 +26,7 @@ class PatrocinadoresController {
         });
     }
 
-    mostrarEquiposPatrocinados() {
+    async mostrarEquiposPatrocinados() {
         return new Promise((resolve, reject) => {
             PatrocinadoresModel.mostrarEquiposPatrocinados()
                 .catch((err) => reject(err))

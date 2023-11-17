@@ -2,7 +2,7 @@ const ModalidadesModel = require('../models/modalidades');
 
 
 class ModalidadesController {
-    insertar(modalidad) {
+    async insertar(modalidad) {
         return new Promise((resolve, reject) => {
             ModalidadesModel.insertar(modalidad)
                 .catch((err) => reject(err))
@@ -10,7 +10,7 @@ class ModalidadesController {
         })
     }
 
-    mostrarModalidad(modalidad) {
+    async mostrarModalidad(modalidad) {
         return new Promise((resolve, reject) => {
             ModalidadesModel.mostrarModalidadPorNombre(modalidad)
                 .catch((err) => reject(err))
@@ -18,7 +18,7 @@ class ModalidadesController {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             ModalidadesModel.mostrar()
                 .catch((err) => reject(err))

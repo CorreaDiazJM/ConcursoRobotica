@@ -2,7 +2,7 @@ const db = require('../database/connection');
 
 
 class PatrocinadoresModel {
-    insertar(patrocinador) {
+    async insertar(patrocinador) {
         return new Promise((resolve, reject) => {
             db.query('INSERT INTO Patrocinador (patrocinador) VALUES (?);', [patrocinador], (err) => {
                 if (err) reject('Ya existe el patrocinador');
@@ -11,7 +11,7 @@ class PatrocinadoresModel {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Patrocinador;', (err, results) => {
                 if (err) reject(err);
@@ -20,7 +20,7 @@ class PatrocinadoresModel {
         });
     }
 
-    mostrarPatrocinadorPorNombre(patrocinador) {
+    async mostrarPatrocinadorPorNombre(patrocinador) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Patrocinador WHERE patrocinador = ?;', [patrocinador], (err, results) => {
                 if (err) reject(err);
@@ -29,7 +29,7 @@ class PatrocinadoresModel {
         });
     }
 
-    mostrarPatrocinadorPorId(idPatrocinador) {
+    async mostrarPatrocinadorPorId(idPatrocinador) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Patrocinador WHERE id = ?;', [idPatrocinador], (err, results) => {
                 if (err) reject(err);
@@ -39,7 +39,7 @@ class PatrocinadoresModel {
         });
     }
 
-    mostrarEquiposPatrocinados() {
+    async mostrarEquiposPatrocinados() {
         return new Promise((resolve, reject) => {
             db.query(
                 'SELECT patrocinador, equipo FROM Patrocinador INNER JOIN Equipo ON Patrocinador.id = id_pat ORDER BY patrocinador;',

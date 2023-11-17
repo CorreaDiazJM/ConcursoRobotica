@@ -3,7 +3,7 @@ const EquiposModel = require('../models/equipo');
 
 
 class ParticipantesModel {
-    insertar(nombre, apellido, idEquipo) {
+    async insertar(nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             EquiposModel.mostrarEquipoPorId(idEquipo)
                 .catch((err) => reject(err))
@@ -27,7 +27,7 @@ class ParticipantesModel {
         });
     }
 
-    editar(idParticipante, nombre, apellido, idEquipo) {
+    async editar(idParticipante, nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             this.mostrarParticipantesPorId(idParticipante)
                 .catch((err) => reject(err))
@@ -47,7 +47,7 @@ class ParticipantesModel {
         });
     }
 
-    mostrarParticipantesPorId(idParticipante) {
+    async mostrarParticipantesPorId(idParticipante) {
         return new Promise((resolve, reject) => {
             db.query(
                 'SELECT * FROM Participante WHERE id = ?;',
@@ -60,7 +60,7 @@ class ParticipantesModel {
         });
     }
 
-    mostrarParticipante(nombre, apellido, idEquipo) {
+    async mostrarParticipante(nombre, apellido, idEquipo) {
         return new Promise((resolve, reject) => {
             db.query(
                 'SELECT * FROM Participante WHERE nombre = ? AND apellido = ? AND id_equ = ?;',
@@ -72,7 +72,7 @@ class ParticipantesModel {
         });
     }
 
-    mostrarParticipantesPorEquipo() {
+    async mostrarParticipantesPorEquipo() {
         return new Promise((resolve, reject) => {
             db.query(
                 'SELECT equipo, nombre, apellido FROM Equipo INNER JOIN Participante ON Equipo.id = id_equ ORDER BY equipo;',
@@ -83,7 +83,7 @@ class ParticipantesModel {
         });
     }
 
-    mostrar() {
+    async mostrar() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM Participante;', (err, results) => {
                 if (err) reject(err);
@@ -92,7 +92,7 @@ class ParticipantesModel {
         });
     }
 
-    eliminar(idParticipante) {
+    async eliminar(idParticipante) {
         return new Promise((resolve, reject) => {
             this.mostrarParticipantesPorId(idParticipante)
                 .catch((err) => reject(err))

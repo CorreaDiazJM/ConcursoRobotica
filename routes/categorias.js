@@ -4,11 +4,11 @@ const CategoriasController = require('../controllers/categorias');
 let router = express.Router();
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     if (req.body.categoria && req.body.modalidad) {
         const { categoria, modalidad } = req.body;
 
-        CategoriasController.insertar(categoria, modalidad)
+        await CategoriasController.insertar(categoria, modalidad)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 CategoriasController.mostrarCategoria(categoria)
@@ -22,10 +22,11 @@ router.post('/', (req, res) => {
     }
 });
 
-router.put('/:idCategoria', (req, res) => {
+router.put('/:idCategoria', async (req, res) => {
     if (req.body.categoria && req.body.modalidad) {
         const { categoria, modalidad } = req.body;
-        CategoriasController.editar(req.params.idCategoria, categoria, modalidad)
+
+        await CategoriasController.editar(req.params.idCategoria, categoria, modalidad)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 CategoriasController.mostrarCategoria(categoria)
@@ -39,14 +40,14 @@ router.put('/:idCategoria', (req, res) => {
     }
 });
 
-router.get('/', (req, res) => {
-    CategoriasController.mostrar()
+router.get('/', async (req, res) => {
+    await CategoriasController.mostrar()
         .catch((err) => res.send(err))
         .then((categorias) => res.send(categorias));
 });
 
-router.delete('/:idCategoria', (req, res) => {
-    CategoriasController.eliminar(req.params.idCategoria)
+router.delete('/:idCategoria', async (req, res) => {
+    await CategoriasController.eliminar(req.params.idCategoria)
         .catch((message) => res.status(400).send({ message }))
         .then(() => {
             CategoriasController.mostrar()
@@ -56,8 +57,8 @@ router.delete('/:idCategoria', (req, res) => {
 });
 
 //NUEVA RUTA
-router.get('/porModalidad', (req, res) => {
-    CategoriasController.mostrarCategoriasPorModalidad()
+router.get('/porModalidad', async (req, res) => {
+    await CategoriasController.mostrarCategoriasPorModalidad()
         .catch((err) => res.status(400).send(err))
         .then((modalidades) => res.render('modalidades', {
             title: 'Modalidades',

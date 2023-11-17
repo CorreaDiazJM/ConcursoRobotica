@@ -4,15 +4,15 @@ const express = require('express');
 let router = express.Router();
 
 
-router.get('/', (req, res) => {
-    PatrocinadoresController.mostrar()
+router.get('/', async (req, res) => {
+    await PatrocinadoresController.mostrar()
         .catch((err) => res.send(err))
         .then((patrocinadores) => res.send(patrocinadores));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     if (req.body.patrocinador) {
-        PatrocinadoresController.insertar(req.body.patrocinador)
+        await PatrocinadoresController.insertar(req.body.patrocinador)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
                 PatrocinadoresController.mostrarPatrocinador(req.body.patrocinador)
@@ -27,8 +27,8 @@ router.post('/', (req, res) => {
 });
 
 //NUEVA RUTA
-router.get('/equiposPatrocinados', (req, res) => {
-    PatrocinadoresController.mostrarEquiposPatrocinados()
+router.get('/equiposPatrocinados', async (req, res) => {
+    await PatrocinadoresController.mostrarEquiposPatrocinados()
         .catch((err) => res.send(err))
         .then((equipos) => res.render('patrocinadores', {
             title: 'Patrocinadores',
