@@ -48,7 +48,7 @@ class CategoriasController {
                 .catch((err) => reject(err))
                 .then((datos) => {
                     const modalidades = [];
-                    const ultima_modalidad = 0;
+                    let ultima_modalidad = 0;
 
                     for (const dato of datos) {
                         const { modalidad, categoria } = dato;
