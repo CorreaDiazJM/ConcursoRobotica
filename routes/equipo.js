@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// NUEVA RUTA
 router.post('/inscribir', async (req, res) => {
     if (req.body.equipo && req.body.categoria) {
         const { equipo, categoria } = req.body;
