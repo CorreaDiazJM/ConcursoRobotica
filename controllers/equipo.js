@@ -66,9 +66,9 @@ class EquiposController {
         });
     }
 
-    async editar(idEquipo, equipo) {
+    async editar(idEquipo, equipo, idPatrocinador) {
         return new Promise((resolve, reject) => {
-            EquiposModel.editar(idEquipo, equipo)
+            EquiposModel.editar(idEquipo, equipo, idPatrocinador)
                 .catch((err) => reject(err))
                 .then(() => resolve());
         });

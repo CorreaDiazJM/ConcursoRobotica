@@ -91,11 +91,13 @@ router.delete('/:idEquipo', async (req, res) => {
 });
 
 router.put('/:idEquipo', async (req, res) => {
-    if (req.body.equipo) {
-        await EquiposController.editar(req.params.idEquipo, req.body.equipo)
+    if (req.body.equipo && req.body.patrocinador) {
+        const { equipo, patrocinador } = req.body;
+
+        await EquiposController.editar(req.params.idEquipo, equipo, patrocinador)
             .catch((message) => res.status(400).send({ message }))
             .then(() => {
-                EquiposController.mostrarEquipo(req.body.equipo)
+                EquiposController.mostrarEquipo(equipo)
                     .catch((err) => res.send(err))
                     .then((equipo) => res.send(equipo));
             });

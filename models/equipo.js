@@ -154,15 +154,22 @@ class EquiposModel {
         });
     }
 
-    async editar(idEquipo, equipo) {
+    async editar(idEquipo, equipo, idPatrocinador) {
         return new Promise((resolve, reject) => {
-            this.mostrarEquipoPorId(idEquipo)
+            PatrocinadoresModel.mostrarPatrocinadorPorId(idPatrocinador)
                 .catch((err) => reject(err))
                 .then(() => {
-                    db.query('UPDATE Equipo SET equipo = ? WHERE id = ?', [equipo, idEquipo], (err) => {
-                        if (err) reject('Ese nombre ya se encuentra registrado');
-                        resolve();
-                    });
+                    this.mostrarEquipoPorId(idEquipo)
+                        .catch((err) => reject(err))
+                        .then(() => {
+                            db.query(
+                                'UPDATE Equipo SET equipo = ?, id_pat = ? WHERE id = ?',
+                                [equipo, idPatrocinador, idEquipo],
+                                (err) => {
+                                    if (err) reject('Ese nombre ya se encuentra registrado');
+                                    resolve();
+                                });
+                        });
                 });
         });
     }
