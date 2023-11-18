@@ -35,12 +35,20 @@ class ParticipantesModel {
                     EquiposModel.mostrarEquipoPorId(idEquipo)
                         .catch((err) => reject(err))
                         .then(() => {
-                            db.query(
-                                'UPDATE Participante SET nombre = ?, apellido = ?, id_equ = ? WHERE id = ?;',
-                                [nombre, apellido, idEquipo, idParticipante],
-                                (err) => {
-                                    if (err) reject(err);
-                                    resolve();
+                            this.mostrarParticipante(nombre, apellido, idEquipo)
+                                .catch((err) => reject(err))
+                                .then((participante) => {
+                                    if (!participante) {
+                                        db.query(
+                                            'UPDATE Participante SET nombre = ?, apellido = ?, id_equ = ? WHERE id = ?;',
+                                            [nombre, apellido, idEquipo, idParticipante],
+                                            (err) => {
+                                                if (err) reject(err);
+                                                resolve();
+                                            });
+                                    } else {
+                                        reject('El participante ya está registrado');
+                                    }
                                 });
                         });
                 });
