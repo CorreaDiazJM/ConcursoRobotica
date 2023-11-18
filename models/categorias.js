@@ -51,7 +51,7 @@ class CategoriasModel {
                                 'UPDATE Categoria SET categoria = ?, id_mod = ? WHERE id = ?;',
                                 [categoria, idModalidad, idCategoria],
                                 (err) => {
-                                    if (err) reject(err);
+                                    if (err) reject('Ya existe la categoría');
                                     resolve();
                                 });
                         });
