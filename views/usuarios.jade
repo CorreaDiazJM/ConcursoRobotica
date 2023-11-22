@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/") Home
+
+    ul 
+        each usuario in usuarios 
+            li #{ usuario.usuario }.
+
+    a(href="/usuarios/registrar") Ingresar nuevo usuario
+
+    
+
