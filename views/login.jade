@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1= title
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/usuarios/login", method="post")
+        label(for="usuario") Usuario: 
+        input#usuario(type="text", name="usuario", required)
+        br
+        br
+        label(for="password") Contraseña: 
+        input#password(type="password", name="password", required)
+        br
+        br
+        input(type="submit", value="Log in")
+
+    br
+    a(href="/usuarios/registrar") ¿No tienes cuenta? Regístrate
+    
