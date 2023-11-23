@@ -3,6 +3,9 @@ extends layout
 block content
   h1= title
 
+  h4 Bienvenido, #{ nombre }. #{ usuario }
+  a(href="/usuarios/logout") Log out
+
   ul 
     li 
       a(href="/categorias/porModalidad") Modalidades 

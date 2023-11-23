@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const { checkLogin } = require('../middleware/auth');
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Concurso de Robótica' });
+router.get('/', checkLogin, function(req, res, next) {
+  const { nombre, username: usuario, rol } = req.token_data;
+
+  res.render('index', {
+    title: 'Concurso de Robótica',
+    nombre,
+    usuario,
+    rol
+  });
 });
 
 module.exports = router;

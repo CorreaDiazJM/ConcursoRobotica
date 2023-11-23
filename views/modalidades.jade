@@ -5,6 +5,11 @@ block content
 
     a(href="/") Home
 
+    br
+    br
+
+    a(href="/usuarios/logout") Log out
+
     ul
         each modalidad in modalidades
             li #{ modalidad.modalidad }
@@ -12,4 +17,3 @@ block content
                     each categoria in modalidad.categorias
                         li #{ categoria }
             br
-      

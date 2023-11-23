@@ -10,6 +10,7 @@ let equiposRouter = require('./routes/equipo');
 let patrocinadoresRouter = require('./routes/patrocinadores');
 let participantesRouter = require('./routes/participantes');
 let categoriasRouter = require('./routes/categorias');
+let usuariosRouter = require('./routes/usuarios');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/equipos', equiposRouter);
 app.use('/patrocinadores', patrocinadoresRouter);
 app.use('/participantes', participantesRouter);
 app.use('/categorias', categoriasRouter);
+app.use('/usuarios', usuariosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
