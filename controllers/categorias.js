@@ -51,20 +51,20 @@ class CategoriasController {
                     let ultima_modalidad = 0;
 
                     for (const dato of datos) {
-                        const { modalidad, categoria } = dato;
+                        const { modalidad, categoria, id } = dato;
 
                         if (!modalidades.length) {
                             modalidades.push({
                                 modalidad: modalidad,
-                                categorias: [categoria]
+                                categorias: [{categoria, id}]
                             });
                         } else if (modalidad === modalidades[ultima_modalidad].modalidad) {
-                            modalidades[ultima_modalidad].categorias.push(categoria);
+                            modalidades[ultima_modalidad].categorias.push({categoria, id});
                         } else {
                             ultima_modalidad++;
                             modalidades.push({
                                 modalidad: modalidad,
-                                categorias: [categoria]
+                                categorias: [{categoria, id}]
                             });
                         }
                     }

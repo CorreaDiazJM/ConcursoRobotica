@@ -20,8 +20,8 @@ block content
         br
         label(for="rol") Rol del usuario: 
         select#rol(name="rol")
-            option(value="1") Editor 
-            option(value="2") Administrador
+            each rol in roles 
+                option(value=rol.id) #{ rol.rol }
         br
         br
         label(for="password") Contraseña: 

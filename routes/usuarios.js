@@ -1,5 +1,6 @@
 const express = require('express');
 const UsuariosController = require("../controllers/usuarios");
+const RolesModel = require('../models/roles');
 const { checkLogin } = require('../middleware/auth');
 
 const router = express.Router();
@@ -8,13 +9,18 @@ const error = {};
 
 
 router.get('/registrar', async (req, res) => {
-    const message = error.message;
-    error.message = '';
-
-    res.render('registrar', {
-        title: 'Registrar',
-        error: message
-    });
+    await RolesModel.mostrar()
+        .catch((err) => res.send(err))
+        .then((roles) => {
+            const message = error.message;
+            error.message = '';
+        
+            res.render('registrar', {
+                title: 'Registrar',
+                error: message,
+                roles
+            });
+        });
 });
 
 router.post('/registrar', async (req, res) => {

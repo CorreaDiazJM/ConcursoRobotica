@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/categorias/porModalidad") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/modalidades", method="post")
+        label(for="modalidad") Modalidad: 
+        input#modalidad(type="text", name="modalidad", required)
+        br
+        br
+        input(type="submit", value="Guardar")

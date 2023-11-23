@@ -12,7 +12,7 @@ const checkLogin = (req, res, next) => {
 
         next();
     } catch(err) {
-        res.status(400).send('Token inválido');
+        res.redirect('/usuarios/login');
     }
 }
 

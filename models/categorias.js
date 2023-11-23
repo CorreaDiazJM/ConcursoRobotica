@@ -84,7 +84,7 @@ class CategoriasModel {
     async mostrarCategoriasPorModalidad() {
         return new Promise((resolve, reject) => {
             db.query(
-                'SELECT modalidad, categoria FROM Modalidad INNER JOIN Categoria ON Modalidad.id = id_mod ORDER BY modalidad;',
+                'SELECT modalidad, categoria, Categoria.id FROM Modalidad INNER JOIN Categoria ON Modalidad.id = id_mod ORDER BY modalidad;',
                 (err, results) => {
                     if (err) reject(err);
                     resolve(results);

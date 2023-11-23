@@ -10,10 +10,21 @@ block content
 
     a(href="/usuarios/logout") Log out
 
+    br
+    br
+
+    a(href="/modalidades/ingresar") Ingresar nueva modalidad
+
+    br
+    br
+
+    a(href="/categorias/ingresar") Ingresar nueva categoria
+
     ul
         each modalidad in modalidades
             li #{ modalidad.modalidad }
                 ul
                     each categoria in modalidad.categorias
-                        li #{ categoria }
+                        li #{ categoria.categoria }
+                        a(href="/categorias/" + categoria.id + "?_method=DELETE") Eliminar
             br
