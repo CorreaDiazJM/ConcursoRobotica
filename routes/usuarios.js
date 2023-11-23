@@ -99,13 +99,19 @@ router.get('/logout', async (req, res) => {
 });
 
 router.get('/', checkLogin, async (req, res) => {
-    await UsuariosController.mostrar()
-        .catch((message) => res.status(400).send({ message }))
-        .then((usuarios) => res.render('usuarios', {
-            title: 'Usuarios',
-            token: '',
-            usuarios
-        }));
+    const { rol } = req.token_data;
+
+    if (rol === 'Administrador') {
+        await UsuariosController.mostrar()
+            .catch((message) => res.status(400).send({ message }))
+            .then((usuarios) => res.render('usuarios', {
+                title: 'Usuarios',
+                token: '',
+                usuarios
+            }));
+    } else {
+        res.render('prohibido', { title: 'Error' });
+    }
 });
 
 

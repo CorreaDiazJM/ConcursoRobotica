@@ -12,11 +12,7 @@ const checkLogin = (req, res, next) => {
 
         next();
     } catch(err) {
-        if (process.env.TOKEN_USUARIO) {
-            res.redirect('/usuarios/login');
-        } else {
-            res.status(400).send('Token inválido');
-        }
+        res.status(400).send('Token inválido');
     }
 }
 
