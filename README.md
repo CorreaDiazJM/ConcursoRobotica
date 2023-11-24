@@ -2,7 +2,7 @@
 
 Debe estar corriendo la base de datos y el servidor de Apache para poder importar los comandos SQL que se encuentran en el archivo ConcursoRobotica.sql en una base de datos con el mismo nombre del archivo, esto haciendo uso de la interfaz de PHPMyAdmin, la cual ofrece la opción de importar los datos ya creada y seleccionada la base de datos.
 
-- Esto permitirá configurar el archivo .env en la carpeta raíz del servidor express con los datos necesarios:
+Esto permitirá configurar el archivo .env en la carpeta raíz del servidor express con los datos necesarios:
 - El nombre de la base de datos estará en la variable DB_DATABASE.
 - El usuario (usualmente es root) en la variable DB_USER.
 - La contraseña (si no creó contraseña para la base de datos se queda vacía) en la variable DB_PASSWORD.
