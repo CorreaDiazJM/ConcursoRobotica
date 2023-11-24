@@ -83,7 +83,7 @@ class ParticipantesModel {
     async mostrarParticipantesPorEquipo() {
         return new Promise((resolve, reject) => {
             db.query(
-                'SELECT equipo, nombre, apellido FROM Equipo INNER JOIN Participante ON Equipo.id = id_equ ORDER BY equipo;',
+                'SELECT equipo, nombre, apellido, Participante.id FROM Equipo INNER JOIN Participante ON Equipo.id = id_equ ORDER BY equipo;',
                 (err, results) => {
                     if (err) reject(err);
                     resolve(results);

@@ -63,13 +63,15 @@ class EquiposModel {
                             let esta_inscrito = false;
         
                             for (const inscripcion of inscripciones) {
-                                if (inscripcion.id_cat === idCategoria) {
+                                if (inscripcion.id_cat === parseInt(idCategoria)) {
                                     esta_inscrito = true;
         
                                     db.query('DELETE FROM Categoria_Equipo WHERE id = ?;', [inscripcion.id], (err) => {
                                         if (err) reject(err);
                                         resolve();
                                     });
+
+                                    break;
                                 }
                             }
         
@@ -177,7 +179,7 @@ class EquiposModel {
     async mostrarInscripciones() {
         return new Promise((resolve, reject) => {
             db.query(
-                'SELECT categoria, equipo FROM Categoria_Equipo INNER JOIN Equipo ON Equipo.id = id_equ INNER JOIN Categoria ON Categoria.id = id_cat ORDER BY categoria;',
+                'SELECT categoria, equipo, id_equ, id_cat FROM Categoria_Equipo INNER JOIN Equipo ON Equipo.id = id_equ INNER JOIN Categoria ON Categoria.id = id_cat ORDER BY categoria;',
                 (err, results) => {
                     if (err) reject(err);
                     resolve(results);

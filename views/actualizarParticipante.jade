@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/participantes/porEquipo") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/participantes/" + id + "?_method=PUT", method="post")
+        label(for="nombre") Nombre: 
+        input#nombre(type="text", name="nombre", value=nombre, required)
+        br
+        br
+        label(for="apellido") Apellido: 
+        input#apellido(type="text", name="apellido", value=apellido, required)
+        br
+        br
+        label(for="equipo") Equipo: 
+        select#equipo(name="equipo")
+            each equipo in equipos 
+                - if (equipo.id == idEquipo)
+                    option(value=equipo.id, selected) #{ equipo.equipo }
+                - else
+                    option(value=equipo.id) #{ equipo.equipo }
+        br
+        br
+        input(type="submit", value="Guardar")

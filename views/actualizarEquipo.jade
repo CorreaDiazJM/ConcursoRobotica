@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/equipos/inscripciones") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/equipos/" + id + "?_method=PUT", method="post")
+        label(for="equipo") Equipo: 
+        input#equipo(type="text", name="equipo", value=equipo, required)
+        br
+        br
+        label(for="patrocinador") Patrocinador: 
+        select#patrocinador(name="patrocinador")
+            each patrocinador in patrocinadores 
+                - if (patrocinador.id == idPatrocinador)
+                    option(value=patrocinador.id, selected) #{ patrocinador.patrocinador }
+                - else
+                    option(value=patrocinador.id) #{ patrocinador.patrocinador }
+        br
+        br
+        input(type="submit", value="Guardar")

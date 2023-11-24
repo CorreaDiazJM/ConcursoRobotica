@@ -10,13 +10,28 @@ block content
 
     a(href="/usuarios/logout") Log out
 
+    br
+    br
+
+    a(href="/equipos/ingresar") Ingresar nuevo equipo
+
+    br
+    br
+
+    a(href="/equipos/inscribir") Inscribir equipo en categoría
+
     ul
-        each equipo in equipos
+        each categoria in categorias
             li
-                strong #{ equipo.categoria }
+                strong #{ categoria.categoria }
                 p Inscritos:
                     ul
-                        each equ in equipo.equipos
-                            li #{ equ }
+                        each equ in categoria.equipos
+                            li #{ equ.equipo }
+                            a(href="/equipos/cambiar/" + equ.id) Editar equipo
+                            br
+                            a(href="/equipos/inscripcion/" + equ.id + "/" + categoria.id + "?_method=DELETE") Eliminar inscripcion 
+                            br
+                            a(href="/equipos/" + equ.id + "?_method=DELETE") Eliminar equipo 
             br
       

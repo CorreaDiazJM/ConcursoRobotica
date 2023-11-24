@@ -51,26 +51,34 @@ class ParticipantesController {
                     let ultimo_equipo = 0;
 
                     for (const participante of participantes) {
-                        const { nombre, apellido } = participante;
+                        const { nombre, apellido, id } = participante;
 
                         if (!equipos.length) {
                             equipos.push({
                                 equipo: participante.equipo,
-                                participantes: [{ nombre, apellido }]
+                                participantes: [{ nombre, apellido, id }]
                             });
                         } else if (participante.equipo === equipos[ultimo_equipo].equipo) {
-                            equipos[ultimo_equipo].participantes.push({ nombre, apellido });
+                            equipos[ultimo_equipo].participantes.push({ nombre, apellido, id });
                         } else {
                             ultimo_equipo++;
                             equipos.push({
                                 equipo: participante.equipo,
-                                participantes: [{ nombre, apellido }]
+                                participantes: [{ nombre, apellido, id }]
                             })
                         }
                     }
 
                     resolve(equipos);
                 });
+        });
+    }
+
+    async mostrarParticipantePorId(idParticipante) {
+        return new Promise((resolve, reject) => {
+            ParticipantesModel.mostrarParticipantesPorId(idParticipante)
+                .catch((err) => reject(err))
+                .then((participante) => resolve(participante));
         });
     }
 }

@@ -10,6 +10,11 @@ block content
 
     a(href="/usuarios/logout") Log out
 
+    br
+    br
+
+    a(href="/participantes/ingresar") Ingresar nuevo participante
+
     ul
         each equipo in equipos
             li
@@ -18,5 +23,8 @@ block content
                     ul
                         each participante in equipo.participantes
                             li #{ participante.apellido }, #{ participante.nombre }
+                            a(href="/participantes/" + participante.id + "?_method=DELETE") Eliminar
+                            br
+                            a(href="/participantes/cambiar/" + participante.id) Editar
             br
       

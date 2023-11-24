@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/patrocinadores/equiposPatrocinados") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/patrocinadores", method="post")
+        label(for="patrocinador") Patrocinador: 
+        input#patrocinador(type="text", name="patrocinador", required)
+        br
+        br
+        input(type="submit", value="Guardar")

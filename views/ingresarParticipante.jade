@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/participantes/porEquipo") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/participantes", method="post")
+        label(for="nombre") Nombre: 
+        input#nombre(type="text", name="nombre", required)
+        br
+        br
+        label(for="apellido") Apellido: 
+        input#apellido(type="text", name="apellido", required)
+        br
+        br
+        label(for="equipo") Equipo: 
+        select#equipo(name="equipo")
+            each equipo in equipos
+                option(value=equipo.id) #{ equipo.equipo }
+        br
+        br
+        input(type="submit", value="Guardar")

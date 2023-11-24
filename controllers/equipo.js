@@ -83,26 +83,38 @@ class EquiposController {
                     let ultima_categoria = 0;
 
                     for (const cat of categorias) {
-                        const { categoria, equipo } = cat;
+                        const { categoria, equipo, id_cat, id_equ } = cat;
 
                         if (!equipos.length) {
                             equipos.push({
+                                id: id_cat,
                                 categoria,
-                                equipos: [equipo]
+                                equipos: [{ equipo, id: id_equ }]
                             });
                         } else if (categoria === equipos[ultima_categoria].categoria) {
-                            equipos[ultima_categoria].equipos.push(equipo);
+                            equipos[ultima_categoria].equipos.push({ equipo, id: id_equ });
                         } else {
                             ultima_categoria++;
                             equipos.push({
+                                id: id_cat,
                                 categoria,
-                                equipos: [equipo]
+                                equipos: [{ equipo, id: id_equ }]
                             });
                         }
                     }
 
+                    console.log(equipos);
+
                     resolve(equipos);
                 });
+        });
+    }
+
+    async mostrarEquipoPorId(idEquipo) {
+        return new Promise((resolve, reject) => {
+            EquiposModel.mostrarEquipoPorId(idEquipo)
+                .catch((err) => reject(err))
+                .then((equipo) => resolve(equipo));
         });
     }
 }

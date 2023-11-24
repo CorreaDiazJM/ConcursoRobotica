@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/categorias/porModalidad") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/categorias/" + id + "?_method=PUT", method="post")
+        label(for="categoria") Categoría: 
+        input#categoria(type="text", name="categoria", value=categoria, required)
+        br
+        br
+        label(for="modalidad") Modalidad: 
+        select#modalidad(name="modalidad")
+            each modalidad in modalidades 
+                - if (modalidad.id == idModalidad)
+                    option(value=modalidad.id, selected) #{ modalidad.modalidad }
+                - else
+                    option(value=modalidad.id) #{ modalidad.modalidad }
+        br
+        br
+        input(type="submit", value="Guardar")

@@ -42,6 +42,14 @@ class CategoriasController {
         });
     }
 
+    async mostrarCategoriaPorId(idCategoria) {
+        return new Promise((resolve, reject) => {
+            CategoriasModel.mostrarCategoriaPorId(idCategoria)
+                .catch((err) => reject(err))
+                .then((categoria) => resolve(categoria));
+        });
+    }
+
     async mostrarCategoriasPorModalidad() {
         return new Promise((resolve, reject) => {
             CategoriasModel.mostrarCategoriasPorModalidad()

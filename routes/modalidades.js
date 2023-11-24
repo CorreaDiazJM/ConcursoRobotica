@@ -10,7 +10,7 @@ const error = {};
 router.get('/', checkLogin, async (req, res) => {
     const { rol } = req.token_data;
     
-    if (rol === 'Administrador' || rol === 'Editar' || rol === 'Espectador') {
+    if (rol === 'Administrador' || rol === 'Editor' || rol === 'Espectador') {
         await ModalidadesController.mostrar()
             .catch((err) => res.send(err))
             .then((modalidades) => res.send(modalidades));

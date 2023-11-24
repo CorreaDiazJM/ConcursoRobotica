@@ -27,4 +27,6 @@ block content
                     each categoria in modalidad.categorias
                         li #{ categoria.categoria }
                         a(href="/categorias/" + categoria.id + "?_method=DELETE") Eliminar
+                        br
+                        a(href="/categorias/cambiar/" + categoria.id) Editar
             br

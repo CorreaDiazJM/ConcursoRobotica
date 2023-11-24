@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1= title
+
+    a(href="/equipos/inscripciones") Regresar
+
+    br
+    br
+
+    - if (error)
+        strong #{ error }
+
+    br
+    br
+
+    form(action="/equipos/inscribir", method="post")
+        label(for="equipo") Equipo: 
+        select#equipo(name="equipo")
+            each equipo in equipos
+                option(value=equipo.id) #{ equipo.equipo }
+        br
+        br
+        label(for="categoria") Categoría: 
+        select#categoria(name="categoria")
+            each categoria in categorias
+                option(value=categoria.id) #{ categoria.categoria }
+        br
+        br
+        input(type="submit", value="Guardar")

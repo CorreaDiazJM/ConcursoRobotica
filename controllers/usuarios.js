@@ -29,8 +29,6 @@ class UsuariosController {
             UsuariosModel.buscarPorUsuario(usuario)
                 .catch((err) => reject(err))
                 .then((usuario) => {
-                    console.log(usuario);
-                    console.log(password);
                     if (!usuario) reject('El usuario no está registrado');
                     
                     if (bcrypt.compareSync(password, usuario.password)) {

@@ -17,11 +17,9 @@ class UsuariosModel {
                             'INSERT INTO Usuario (usuario, nombre, rol_id, password) VALUES (?, ?, ?, ?);',
                             [usuario, nombre, rol, pass],
                             (err) => {
-                                console.log('AQUI ', err);
                                 if (err && err.errno === 1406) reject('El usuario tiene un límite de 40 caracteres');
                                 if (err && err.errno === 1062) reject('El nombre ya está registrado');
                                 if (err) reject(err);
-                                console.log('no esta');
                                 resolve();
                             });
                     } else {
