@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2023 a las 15:02:31
+-- Tiempo de generación: 24-11-2023 a las 03:35:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -38,8 +38,12 @@ CREATE TABLE `Categoria` (
 --
 
 INSERT INTO `Categoria` (`id`, `categoria`, `id_mod`) VALUES
-(31, 'Dos', 46),
-(32, 'Zumo', 46);
+(31, 'Zuo2', 36),
+(34, 'Zum', 46),
+(37, 'Zuo1', 52),
+(42, 'Zuo103234', 49),
+(43, 'asdf', 59),
+(44, 'Zuo10', 60);
 
 -- --------------------------------------------------------
 
@@ -58,16 +62,9 @@ CREATE TABLE `Categoria_Equipo` (
 --
 
 INSERT INTO `Categoria_Equipo` (`id`, `id_cat`, `id_equ`) VALUES
-(12, 32, 15),
-(13, 32, 16),
-(14, 32, 17),
-(15, 32, 18),
-(16, 31, 15),
-(17, 31, 16),
-(18, 31, 24),
-(19, 31, 23),
 (20, 31, 22),
-(21, 32, 22);
+(25, 31, 16),
+(37, 37, 25);
 
 -- --------------------------------------------------------
 
@@ -86,18 +83,16 @@ CREATE TABLE `Equipo` (
 --
 
 INSERT INTO `Equipo` (`id`, `equipo`, `id_pat`) VALUES
-(14, 'Dark', 7),
-(15, 'uno', 7),
 (16, 'a', 7),
 (17, 'r', 7),
-(18, 'k', 7),
-(20, 'le coq', 12),
-(21, 'l', 12),
+(21, 'le coq copia', 16),
 (22, 'e', 12),
-(23, 'c', 12),
 (24, 'o', 1),
-(25, 'q', 1),
-(29, 'u', 1);
+(25, 'de nuevo', 17),
+(29, 'u', 1),
+(34, 'Drk', 7),
+(38, 'Zuo2', 7),
+(42, 'equipo', 7);
 
 -- --------------------------------------------------------
 
@@ -117,7 +112,10 @@ CREATE TABLE `Modalidad` (
 INSERT INTO `Modalidad` (`id`, `modalidad`) VALUES
 (49, 'B'),
 (46, 'Batallas'),
+(59, 'nueva'),
+(60, 'otra'),
 (52, 'P'),
+(54, 'Soluciones'),
 (36, 'Soluciones Industriales');
 
 -- --------------------------------------------------------
@@ -138,25 +136,11 @@ CREATE TABLE `Participante` (
 --
 
 INSERT INTO `Participante` (`id`, `nombre`, `apellido`, `id_equ`) VALUES
-(3, 'Pepe', 'Pedro', 14),
-(9, 'Moises', 'Terán', 20),
-(10, 'm', 't', 20),
-(11, 'mo', 'te', 20),
-(12, 'mo', 'te', 14),
-(13, 'moi', 'te', 14),
-(14, 'mois', 'te', 14),
-(15, 'moise', 'te', 14),
-(16, 'moise', 'te', 15),
-(17, 'moises', 'te', 15),
-(18, 'moises', 'ter', 15),
-(19, 'moises', 'tera', 15),
-(20, 'moises', 'tera', 16),
-(21, 'moiss', 'tera', 16),
 (22, 'mois', 'tera', 16),
-(23, 'moi', 'tera', 16),
 (24, 'moi', 'tera', 17),
-(25, 'moi', 'tera', 18),
-(26, 'mois', 'tera', 18);
+(32, 'tera', 'mois', 25),
+(33, 'tera', 'mois', 16),
+(34, 'copia', 'copia', 21);
 
 -- --------------------------------------------------------
 
@@ -175,9 +159,59 @@ CREATE TABLE `Patrocinador` (
 
 INSERT INTO `Patrocinador` (`id`, `patrocinador`) VALUES
 (7, 'KEL'),
+(16, 'KEL copia'),
+(17, 'nuevo'),
+(14, 'Otr'),
 (12, 'Otro'),
 (1, 'polar'),
 (10, 'Trululu');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Rol`
+--
+
+CREATE TABLE `Rol` (
+  `id` int(32) NOT NULL,
+  `rol` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `Rol`
+--
+
+INSERT INTO `Rol` (`id`, `rol`) VALUES
+(2, 'Administrador'),
+(1, 'Editor'),
+(3, 'Espectador');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Usuario`
+--
+
+CREATE TABLE `Usuario` (
+  `id` int(32) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `nombre` varchar(40) NOT NULL,
+  `rol_id` int(32) NOT NULL,
+  `password` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `Usuario`
+--
+
+INSERT INTO `Usuario` (`id`, `usuario`, `nombre`, `rol_id`, `password`) VALUES
+(6, 'jose121correa', 'José Correa', 1, '$2b$10$X5zxtSCwkmav28w1GhSN5.fIKgGX6hnZp8DfEj5.ADxCKAjRso8oS'),
+(10, 'ricardoBricenio', 'Ricardo Briceño', 1, '$2b$10$LK4ORPwaQvXa9UDlETuUeuKXM7IgTiMUGgqn.LG4GGCcpjKw4T14a'),
+(12, 'asdf', 'asdf', 1, '$2b$10$5gMJiRuVAXdfJ/exJIHoX.FOf.lqT.nFjCQZKZs5gEAgvPvgeprU6'),
+(24, 'mcorrea', 'Manuel Correa', 3, '$2b$10$Fv1umM748XSApiBglTW98.6tDsDlSlilzB501KXNON/Y4pziI4Ncu'),
+(25, 'jose', 'José', 3, '$2b$10$IYyrqhzo0WLl/DewEmbD6OjmzRbZvmf8KxJND9193zCYPf7aekWhi'),
+(26, 'admin', 'Jose Admin', 2, '$2b$10$.n6cCXE6e6th/9nh2D/Q3uoDy58bV0K.Du.2y59/br8KdFbv2p9Vm'),
+(27, 'algo', 'algo aglo', 3, '$2b$10$23p7aJRMekV6vtDPKdY51udmdKPpaWkVRoCf2liIsHl26GLF/.USq');
 
 --
 -- Índices para tablas volcadas
@@ -229,6 +263,22 @@ ALTER TABLE `Patrocinador`
   ADD UNIQUE KEY `patrocinador` (`patrocinador`);
 
 --
+-- Indices de la tabla `Rol`
+--
+ALTER TABLE `Rol`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `rol` (`rol`);
+
+--
+-- Indices de la tabla `Usuario`
+--
+ALTER TABLE `Usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
+  ADD KEY `rol_id` (`rol_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -236,37 +286,49 @@ ALTER TABLE `Patrocinador`
 -- AUTO_INCREMENT de la tabla `Categoria`
 --
 ALTER TABLE `Categoria`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `Categoria_Equipo`
 --
 ALTER TABLE `Categoria_Equipo`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `Equipo`
 --
 ALTER TABLE `Equipo`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `Modalidad`
 --
 ALTER TABLE `Modalidad`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `Participante`
 --
 ALTER TABLE `Participante`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `Patrocinador`
 --
 ALTER TABLE `Patrocinador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `Rol`
+--
+ALTER TABLE `Rol`
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `Usuario`
+--
+ALTER TABLE `Usuario`
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Restricciones para tablas volcadas
@@ -296,6 +358,12 @@ ALTER TABLE `Equipo`
 --
 ALTER TABLE `Participante`
   ADD CONSTRAINT `Participante_ibfk_1` FOREIGN KEY (`id_equ`) REFERENCES `Equipo` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `Usuario`
+--
+ALTER TABLE `Usuario`
+  ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `Rol` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
